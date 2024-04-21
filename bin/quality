@@ -1,0 +1,16 @@
+ #!/usr/bin/env sh
+
+set -e
+
+echo "===Started Rubocop==="
+bin/rubocop --display-style-guide
+echo "===Finished Rubocop===\n"
+
+echo "===Started Brakeman==="
+bin/brakeman --quiet --skip-libs --no-pager --exit-on-warn
+echo "===Finished Brakeman===\n"
+
+echo "===Started bundle-audit==="
+bin/bundle-audit update
+bin/bundle-audit
+echo "===Finished bundle-audit==="
