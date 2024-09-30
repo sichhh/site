@@ -6,7 +6,7 @@ gem "brakeman"
 gem "bundler-audit"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
-gem "shoulda-matchers"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 
@@ -75,4 +75,5 @@ group :test do
   gem "factory_bot", "~> 6.4"
   gem "faker"
   gem "selenium-webdriver"
+  gem "shoulda-matchers"
 end
