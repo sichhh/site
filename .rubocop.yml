@@ -1,4 +1,3 @@
-
 require:
  - rubocop-rails
 
@@ -8,6 +7,11 @@ Rails:
 AllCops:
  TargetRubyVersion: 3.0
  NewCops: disable
+ Exclude:
+    - 'bin//*'
+    - 'db//*'
+    - 'vendor//*'
+    - 'tmp//*'
 
 Layout/LineLength:
  Max: 120
@@ -23,3 +27,4 @@ Style/StringLiterals:
 
 Bundler/OrderedGems:
   Enabled: true
+  
