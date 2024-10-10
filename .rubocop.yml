@@ -1,0 +1,28 @@
+require:
+ - rubocop-rails
+
+Rails:
+  Enabled: true
+
+AllCops:
+ TargetRubyVersion: 3.0
+ NewCops: disable
+ Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+Layout/LineLength:
+ Max: 120
+
+Style/FrozenStringLiteralComment:
+ Enabled: false
+
+Style/Documentation:
+ Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Bundler/OrderedGems:
+  Enabled: true
