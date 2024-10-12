@@ -4,6 +4,7 @@ ruby "3.1.2"
 
 gem "brakeman"
 gem "bundler-audit"
+gem "devise"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
 
