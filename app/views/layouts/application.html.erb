@@ -14,7 +14,7 @@
     <%= yield %>
   </body>
   <% if user_signed_in? %>
-  <p>Welcome, <%= current_user.email %>!</p>
+  <p>Welcome, <%= current_user.first_name %>!</p>
   <%= button_to 'Выход', destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to 'Вход', new_user_session_path %>
