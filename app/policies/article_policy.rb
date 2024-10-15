@@ -1,9 +1,4 @@
-class ArticlePolicy < ActionPolicy::Base
-  def initialize(user, record)
-    @user = user
-    @record = record
-  end
-
+class ArticlePolicy < ApplicationPolicy
   def index?
     true
   end
@@ -27,8 +22,4 @@ class ArticlePolicy < ActionPolicy::Base
   def edit?
     update?
   end
-
-  private
-
-  attr_reader :user, :record
 end

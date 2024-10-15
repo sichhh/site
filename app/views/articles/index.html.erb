@@ -6,8 +6,8 @@
       <li>
         <%= link_to article.title, article_path(article) %>
          <% if user_signed_in? && current_user == article.user %>
-    <%= link_to 'Edit', edit_article_path(article) %>
-  <% end %>
+          <%= link_to 'Edit', edit_article_path(article) %>
+         <% end %>
       </li>
     <% end %>
   <% end %>
