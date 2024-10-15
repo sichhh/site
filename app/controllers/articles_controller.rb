@@ -20,7 +20,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = current_user.articles.build(article_params) # Привязываем статью к текущему пользователю
+    @article = current_user.articles.build(article_params)
     authorize! @article
 
     if @article.save
@@ -52,7 +52,6 @@ class ArticlesController < ApplicationController
 
   def set_article
     @article = Article.find_by(id: params[:id])
-    
   end
 
   def article_params
