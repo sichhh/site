@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.1.2"
 
+gem "action_policy"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"

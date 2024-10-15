@@ -1,9 +1,5 @@
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with(
-    name: ENV.fetch("BASIC_AUTH_LOGIN"),
-    password: ENV.fetch("BASIC_AUTH_PASSWORD"),
-    except: %i[index show]
-  )
+  before_action :set_article, only: %i[show edit update destroy]
 
   def index
     @articles = Article.all
@@ -18,11 +14,11 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
+    authorize_action!
   end
 
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.build(article_params) # Привязываем статью к текущему пользователю
 
     if @article.save
       redirect_to @article
@@ -32,7 +28,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.find(params[:id])
+    authorize_action! # Проверяем права на обновление
 
     if @article.update(article_params)
       redirect_to @article
@@ -42,7 +38,8 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
+    authorize_action! # Проверяем права на удаление
+
     @article.destroy
 
     redirect_to root_path, status: :see_other
@@ -50,7 +47,23 @@ class ArticlesController < ApplicationController
 
   private
 
+  def set_article
+    @article = Article.find_by(id: params[:id])
+    return if @article
+
+    redirect_to articles_path
+  end
+
   def article_params
     params.require(:article).permit(:title, :body, :status)
+  end
+
+  def authorize_action!
+    action = "#{action_name}?" # Получаем имя действия
+    policy = ArticlePolicy.new(current_user, @article) # Создаем экземпляр политики
+
+    return if policy.public_send(action)  # Проверяем, есть ли доступ
+
+    raise ActionPolicy::Unauthorized
   end
 end
