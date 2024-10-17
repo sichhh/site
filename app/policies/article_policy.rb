@@ -11,6 +11,10 @@ class ArticlePolicy < ApplicationPolicy
     user.present?
   end
 
+  def new?
+    create?
+  end
+
   def update?
     user.present? && record.user_id == user.id
   end
