@@ -1,7 +1,7 @@
 <% unless comment.archived? %>
   <p>
     <strong>Commenter:</strong>
-    <%= comment.commenter %>
+    <%= comment.user.first_name %>
   </p>
 
   <p>
@@ -13,6 +13,12 @@
     <%= link_to "Destroy Comment", [comment.article, comment], data: {
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure?"
-                } %>
+                }, class: "btn btn-danger" if current_user == comment.user || current_user == comment.article.user %>
   </p>
+
+  <% if current_user == comment.user %>
+    <p>
+      <%= link_to "Edit Comment", article_comment_path(comment.article, comment), class: "btn btn-primary" %>
+    </p>
+  <% end %>
 <% end %>
