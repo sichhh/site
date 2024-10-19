@@ -4,6 +4,7 @@ class Comment < ApplicationRecord
 
   validates :body, presence: true
   validates :status, inclusion: { in: %w[public private], message: "%<value>s is not a valid status" }
+
   def archived?
     status == "archived"
   end
