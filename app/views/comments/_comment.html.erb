@@ -9,12 +9,14 @@
     <%= comment.body %>
   </p>
 
-  <p>
+ <p>
+  <% if allowed_to?(:destroy?, comment) %>
     <%= link_to "Destroy Comment", [comment.article, comment], data: {
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure?"
-                }, class: "btn btn-danger" if current_user == comment.user || current_user == comment.article.user %>
-  </p>
+                } %>
+  <% end %>
+</p>
 
   <% if current_user == comment.user %>
     <p>

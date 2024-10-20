@@ -10,8 +10,10 @@
 </p>
 
 <ul>
-  <% if user_signed_in? && current_user == @comment.user %>
+  <% if allowed_to?(:edit?, @comment) %>
     <li><%= link_to 'Edit', edit_article_comment_path(@article, @comment) %></li>
+    <% end %>
+    <% if allowed_to?(:destroy?, @comment) %>
     <li><%= link_to 'Destroy', article_comment_path(@article, @comment), data: {
                       turbo_method: :delete,
                       turbo_confirm: "Are you sure?"
