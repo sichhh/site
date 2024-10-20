@@ -1,0 +1,22 @@
+<h1><%= @article.title %></h1>
+
+<p><%= @article.body %></p>
+
+<h1>Comment Details</h1>
+
+<p>
+  <strong>Body:</strong>
+  <%= @comment.body %>
+</p>
+
+<ul>
+  <% if allowed_to?(:edit?, @comment) %>
+    <li><%= link_to 'Edit', edit_article_comment_path(@article, @comment) %></li>
+    <% end %>
+    <% if allowed_to?(:destroy?, @comment) %>
+    <li><%= link_to 'Destroy', article_comment_path(@article, @comment), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    } %></li>
+  <% end %>
+</ul>

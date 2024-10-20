@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.1.2"
 
+gem "action_policy"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
@@ -73,7 +74,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "database_cleaner"
-  gem "factory_bot", "~> 6.4"
+  gem "factory_bot_rails"
   gem "faker"
   gem "selenium-webdriver"
   gem "shoulda-matchers"

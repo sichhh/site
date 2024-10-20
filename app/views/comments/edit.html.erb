@@ -1,0 +1,20 @@
+<h1>Comment Details</h1>
+
+<p>
+  <strong>Body:</strong>
+  <%= @comment.body %>
+</p>
+
+<ul>
+  <% if user_signed_in? && current_user == @comment.user %>
+    <li><%= link_to "Edit Comment", edit_article_comment_path(@article, @comment) %></li>
+    <li><%= link_to "Destroy Comment", article_comment_path(@article, @comment), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    } %></li>
+  <% end %>
+</ul>
+
+<h1>Edit Comment</h1>
+
+<%= render "form", comment: @comment %>
