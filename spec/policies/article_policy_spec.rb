@@ -1,62 +1,38 @@
 require "rails_helper"
+
 RSpec.describe ArticlePolicy do
   let(:user) { create(:user) }
   let(:article) { create(:article, user: user) }
   let(:other_user) { create(:user) }
 
-  let(:policy) { described_class.new(article, user: user) }
+  shared_examples "проверка прав доступа" do |action|
+    subject { policy.apply(action) }
 
-  describe "#update?" do
-    subject { policy.apply(:update?) }
-
-    context "when the user is not the author" do
+    context "когда пользователь не автор" do
       let(:policy) { described_class.new(article, user: other_user) }
       it { is_expected.to eq false }
     end
 
-    context "when the user is the author" do
+    context "когда пользователь - автор" do
+      let(:policy) { described_class.new(article, user: user) } 
       it { is_expected.to eq true }
     end
 
-    context "when the user is not authenticated" do
+    context "когда пользователь не авторизован" do
       let(:policy) { described_class.new(article, user: nil) }
       it { is_expected.to eq false }
     end
   end
 
+  describe "#update?" do
+    it_behaves_like "проверка прав доступа", :update? 
+  end
+
   describe "#edit?" do
-    subject { policy.apply(:edit?) }
+    it_behaves_like "проверка прав доступа", :edit?
+  end
 
-    context "when the user is not the author" do
-      let(:policy) { described_class.new(article, user: other_user) }
-      it { is_expected.to eq false }
-    end
-
-    context "when the user is the author" do
-      it { is_expected.to eq true }
-    end
-
-    context "when the user is not authenticated" do
-      let(:policy) { described_class.new(article, user: nil) }
-      it { is_expected.to eq false }
-    end
-
-    describe "#destroy?" do
-      subject { policy.apply(:destroy?) }
-
-      context "when the user is not the author" do
-        let(:policy) { described_class.new(article, user: other_user) }
-        it { is_expected.to eq false }
-      end
-
-      context "when the user is the author" do
-        it { is_expected.to eq true }
-      end
-
-      context "when the user is not authenticated" do
-        let(:policy) { described_class.new(article, user: nil) }
-        it { is_expected.to eq false }
-      end
-    end
+  describe "#destroy?" do
+    it_behaves_like "проверка прав доступа", :destroy?
   end
 end
