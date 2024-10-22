@@ -14,7 +14,7 @@ RSpec.describe ArticlePolicy do
     end
 
     context "когда пользователь - автор" do
-      let(:policy) { described_class.new(article, user: user) } 
+      let(:policy) { described_class.new(article, user: user) }
       it { is_expected.to eq true }
     end
 
@@ -25,7 +25,7 @@ RSpec.describe ArticlePolicy do
   end
 
   describe "#update?" do
-    it_behaves_like "проверка прав доступа", :update? 
+    it_behaves_like "проверка прав доступа", :update?
   end
 
   describe "#edit?" do
