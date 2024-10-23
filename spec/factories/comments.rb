@@ -6,7 +6,6 @@ FactoryBot.define do
     status { "public" }
     user
 
-    # Можно добавить трейт для создания нескольких комментариев к статье
     trait :with_comments do
       after(:create) do |comment|
         create_list(:comment, 3, article: comment.article)
