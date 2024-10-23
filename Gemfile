@@ -6,6 +6,7 @@ gem "action_policy"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
+gem "letter_opener"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
 
