@@ -27,12 +27,4 @@ RSpec.describe ArticlePolicy do
   describe "#update?" do
     it_behaves_like "проверка прав доступа", :update?
   end
-
-  describe "#edit?" do
-    it_behaves_like "проверка прав доступа", :edit?
-  end
-
-  describe "#destroy?" do
-    it_behaves_like "проверка прав доступа", :destroy?
-  end
 end

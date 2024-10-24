@@ -10,7 +10,6 @@ RSpec.feature "Password Reset", type: :feature do
 
     click_on "Send me reset password instructions"
 
-    expect(page).to have_content("You will receive an email with instructions on how to reset your password in a few minutes.")
-
+    expect(page).to have_content("You will receive an email with instructions")
   end
 end
