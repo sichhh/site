@@ -1,5 +1,9 @@
 <h1>Articles</h1>
 
+<%= link_to "Сортировать по дате (по возрастанию)", articles_path(order: 'asc') %>
+<%= link_to "Сортировать по дате (по убыванию)", articles_path(order: 'desc') %>
+
+<div id="articles">
 <ul>
   <% @articles.each do |article| %>
     <% unless article.archived? %>
@@ -16,3 +20,5 @@
 <% if current_user %>
   <%= link_to 'New Article', new_article_path %>
 <% end %>
+
+<%= paginate @articles %>

@@ -3,6 +3,8 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all
+    order = params[:order] || "desc"
+    @articles = Article.sorted_by(order).page(params[:page]).per(2)
   end
 
   def show
