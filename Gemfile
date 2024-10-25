@@ -3,9 +3,11 @@ source "https://rubygems.org"
 ruby "3.1.2"
 
 gem "action_policy"
+gem "activestorage"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
+gem "image_processing"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
 

@@ -1,0 +1,22 @@
+<h1>Edit Profile</h1>
+
+<%= form_with model: @user, local: true do |form| %>
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :avatar %>
+    <%= form.file_field :avatar %>
+    <% if @user.avatar.attached? %>
+      <div>
+        <%= image_tag @user.avatar %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Update Profile' %>
+  </div>
+<% end %>
