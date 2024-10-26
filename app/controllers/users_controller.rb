@@ -2,9 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: %i[edit update destroy_avatar]
 
-  def edit
-    # Your code for edit action
-  end
+  def edit; end
 
   def update
     if @user.update(user_params)
