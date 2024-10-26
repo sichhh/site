@@ -18,9 +18,9 @@ footer {
 }
 
 .my-custom-button {
-  background-color: #011f1f; /* Ваш любимый цвет */
-  color: #fff; /* Белый текст */
-  border-radius: 20px; /* Закругленные углы */
-  padding: 10px 20px; /* Отступы */
-  font-size: 16px; /* Размер шрифта */
+  background-color: #011f1f;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
 }
