@@ -11,13 +11,31 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <div class="container">
+        <h1>Blog</h1> 
+        <div class="text-right">
+          <% if user_signed_in? %>
+            <p>Welcome, <%= current_user.first_name %>!</p>
+            <%= button_to 'Выход', destroy_user_session_path, method: :delete, class: 'btn btn-outline-secondary' %>
+          <% else %>
+            <%= link_to 'Вход', new_user_session_path, class: 'my-custom-button' %>
+            <%= link_to 'Регистрация', new_user_registration_path, class: 'my-custom-button' %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <main class="container"> 
+      <%= yield %> 
+    </main>
+
+    <footer class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p>&copy; <%= Time.now.year %> My Blog</p>
+        </div>
+        </div>
+    </footer>
   </body>
-  <% if user_signed_in? %>
-  <p>Welcome, <%= current_user.first_name %>!</p>
-  <%= button_to 'Выход', destroy_user_session_path, method: :delete %>
-<% else %>
-  <%= link_to 'Вход', new_user_session_path %>
-  <%= link_to 'Регистрация', new_user_registration_path %>
-<% end %>
 </html>
