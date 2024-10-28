@@ -17,7 +17,7 @@
         <div class="text-right">
           <% if user_signed_in? %>
             <p>Welcome, <%= current_user.first_name %>!</p>
-            <%= button_to 'Выход', destroy_user_session_path, method: :delete, class: 'btn btn-outline-secondary' %>
+            <%= button_to 'Выход', destroy_user_session_path, method: :delete, class: 'my-custom-button' %>
           <% else %>
             <%= link_to 'Вход', new_user_session_path, class: 'my-custom-button' %>
             <%= link_to 'Регистрация', new_user_registration_path, class: 'my-custom-button' %>

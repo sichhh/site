@@ -11,7 +11,7 @@
 
  <p>
   <% if allowed_to?(:destroy?, comment) %>
-    <%= link_to "Destroy Comment", [comment.article, comment], data: {
+    <%= link_to "Destroy Comment", [comment.article, comment], class: "my-custom-button", data: {
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure?"
                 } %>
@@ -20,7 +20,7 @@
 
   <% if current_user == comment.user %>
     <p>
-      <%= link_to "Edit Comment", article_comment_path(comment.article, comment), class: "btn btn-primary" %>
+      <%= link_to "Edit Comment", article_comment_path(comment.article, comment), class: "my-custom-button" %>
     </p>
   <% end %>
 <% end %>
