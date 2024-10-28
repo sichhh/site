@@ -8,6 +8,7 @@ gem "brakeman"
 gem "bundler-audit"
 gem "devise"
 gem "image_processing"
+gem "mini_magick"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
 

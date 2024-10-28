@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[edit update destroy_avatar]
+  before_action :set_user, only: %i[edit update]
 
   def edit; end
 
@@ -12,10 +12,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy_avatar
-    @user.avatar.purge
-    redirect_to articles_path
-  end
 
   private
 
@@ -24,6 +20,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :avatar)
+    params.require(:user).permit(:first_name, :last_name, :email, :age, :avatar)
   end
 end
