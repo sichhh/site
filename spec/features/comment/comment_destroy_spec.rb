@@ -1,8 +1,5 @@
 require "rails_helper"
 
-# Assuming you have a features_helper.rb or support/features.rb file
-# with the Features module and the sign_in method defined.
-
 RSpec.feature "Deleting a Comment", type: :feature do
   include Features
 
