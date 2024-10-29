@@ -1,13 +1,14 @@
 require "rails_helper"
 
-RSpec.feature "Аутентификация пользователя с некорректными даными", type: :feature do
-  scenario "пользователь пытается войти в систему с некорректным паролем" do
-    User.create!(first_name: "Denis", last_name: "Zaharov", age: 25,
-                 email: "denis@example.com", password: "securepassword")
+RSpec.feature "User Authentication with Incorrect Credentials", type: :feature do
+  let(:user) do
+    create(:user, first_name: "test", last_name: "test", email: "test@example.com", password: "securepassword")
+  end
 
+  scenario "user tries to log in with incorrect password" do
     visit new_user_session_path
 
-    fill_in "user[email]", with: "denis@example.com"
+    fill_in "user[email]", with: user.email
     fill_in "user[password]", with: "wrongpassword"
 
     click_on "Log in"
@@ -15,14 +16,11 @@ RSpec.feature "Аутентификация пользователя с неко
     expect(page).to have_content("Invalid Email or password.")
   end
 
-  scenario "пользователь пытается войти в систему с некорректным email" do
-    User.create!(first_name: "Denis", last_name: "Zaharov", age: 25,
-                 email: "denis@example.com", password: "securepassword")
-
+  scenario "user tries to log in with incorrect email" do
     visit new_user_session_path
 
     fill_in "user[email]", with: "unregistered@example.com"
-    fill_in "user[password]", with: "somepassword"
+    fill_in "user[password]", with: "securepassword"
 
     click_on "Log in"
 

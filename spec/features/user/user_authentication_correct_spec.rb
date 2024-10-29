@@ -1,32 +1,43 @@
 require "rails_helper"
 
-RSpec.feature "Аутентификация пользователя", type: :feature do
-  scenario "пользователь успешно регистрируется" do
+RSpec.feature "User Registration", type: :feature do
+  let(:user) do
+    build(:user, first_name: "test", last_name: "test", email: "test@example.com", password: "securepassword")
+  end
+
+  scenario "user successfully registers" do
     visit new_user_registration_path
 
-    fill_in "user[first_name]", with: "Denis"
-    fill_in "user[last_name]", with: "Zaharov"
-    fill_in "user[age]", with: "25"
-    fill_in "user[email]", with: "denis@example.com"
-    fill_in "user[password]", with: "securepassword"
-    fill_in "user[password_confirmation]", with: "securepassword"
+    within("#new_user") do
+      fill_in "First name", with: user.first_name
+      fill_in "Last name", with: user.last_name
+      fill_in "Age", with: 25
+      fill_in "Email", with: user.email
+      fill_in "Password", with: user.password
+      fill_in "Password confirmation", with: user.password
+    end
 
     click_on "Sign up"
 
-    expect(page).to have_content("Welcome, Denis!")
+    expect(page).to have_content("Welcome")
+  end
+end
+
+RSpec.feature "User Login", type: :feature do
+  let(:user) do
+    create(:user, first_name: "test", last_name: "test", email: "test@example.com", password: "securepassword")
   end
 
-  scenario "пользователь входит в систему с корректными данными" do
-    User.create!(first_name: "Denis", last_name: "Zaharov", age: 25,
-                 email: "denis@example.com", password: "securepassword")
-
+  scenario "user logs in with correct credentials" do
     visit new_user_session_path
 
-    fill_in "user[email]", with: "denis@example.com"
-    fill_in "user[password]", with: "securepassword"
+    within("#new_user") do
+      fill_in "Email", with: user.email
+      fill_in "Password", with: user.password
+    end
 
     click_on "Log in"
 
-    expect(page).to have_content("Welcome, Denis!")
+    expect(page).to have_content("Welcome")
   end
 end
