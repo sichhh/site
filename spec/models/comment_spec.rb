@@ -1,21 +1,25 @@
-describe Comment, type: :model do
+require 'rails_helper'
+
+RSpec.describe Comment, type: :model do
+  let(:comment) { build(:comment) }
+
   it "returns invalid comment without a commenter" do
-    comment = Comment.new(body: "This is a comment", status: "visible")
+    comment.commenter = nil
     expect(comment).not_to be_valid
   end
 
   it "returns invalid comment without a body" do
-    comment = Comment.new(commenter: "Test User", status: "visible")
+    comment.body = nil
     expect(comment).not_to be_valid
   end
 
   it "returns invalid comment without a status" do
-    comment = Comment.new(commenter: "Test User", body: "This is a comment")
+    comment.status = nil
     expect(comment).not_to be_valid
   end
 
   it "returns invalid comment with a status other than 'visible' or 'hidden'" do
-    comment = Comment.new(commenter: "Test User", body: "This is a comment", status: "invalid_status")
+    comment.status = "invalid_status"
     expect(comment).not_to be_valid
   end
-end
+end 
