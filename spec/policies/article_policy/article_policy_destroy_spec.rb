@@ -5,26 +5,26 @@ RSpec.describe ArticlePolicy do
   let(:article) { create(:article, user: user) }
   let(:other_user) { create(:user) }
 
-  shared_examples "проверка прав доступа" do |action|
+  shared_examples "access rights check" do |action|
     subject { policy.apply(action) }
 
-    context "когда пользователь не автор" do
+    context "when the user is not the author" do
       let(:policy) { described_class.new(article, user: other_user) }
       it { is_expected.to eq false }
     end
 
-    context "когда пользователь - автор" do
+    context "when the user is the author" do
       let(:policy) { described_class.new(article, user: user) }
       it { is_expected.to eq true }
     end
 
-    context "когда пользователь не авторизован" do
+    context "when the user is not authenticated" do
       let(:policy) { described_class.new(article, user: nil) }
       it { is_expected.to eq false }
     end
   end
 
   describe "#destroy?" do
-    it_behaves_like "проверка прав доступа", :destroy?
+    it_behaves_like "access rights check", :destroy?
   end
 end
