@@ -1,24 +1,20 @@
 require "rails_helper"
 
+# Assuming you have a features_helper.rb or support/features.rb file
+# with the Features module and the sign_in method defined.
+
 RSpec.feature "Deleting a Comment", type: :feature do
-  let!(:user) do
-    User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
-                 password: "securepassword")
-  end
+  include Features
+
+  let(:user) { create(:user) }
 
   before do
-    visit new_user_session_path
-    fill_in "user[email]", with: "denis@example.com"
-    fill_in "user[password]", with: "securepassword"
-    click_on "Log in"
+    sign_in(user)
   end
 
   scenario "User can delete their own comment" do
-    article = Article.create!(title: "Test Article",
-                              body: "This is a test article.",
-                              status: "public",
-                              user: user)
-    comment = Comment.create!(body: "Comment to be updated", status: "public", article: article, user: user)
+    article = create(:article, user: user)
+    comment = create(:comment, article: article, user: user)
 
     visit article_path(article)
 

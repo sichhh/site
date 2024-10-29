@@ -1,28 +1,19 @@
+require "rails_helper"
+
 RSpec.feature "Viewing Articles", type: :feature do
-  let!(:user) do
-    User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
-                 password: "securepassword")
-  end
+  include Features
+
+  let(:user) { create(:user) }
+  let(:article) { create(:article, user: user) }
 
   scenario "Guest user can see articles" do
-    article = Article.create!(title: "Test Article",
-                              body: "This is a test article.",
-                              status: "public",
-                              user: user)
-
-    visit articles_path
-
+    visit article_path(article)
     expect(page).to have_content(article.title)
   end
 
   scenario "Registered user can see all articles" do
-    article = Article.create!(title: "Test Article",
-                              body: "This is a test article.",
-                              status: "public",
-                              user: user)
-
-    visit articles_path
-
+    sign_in(user)
+    visit article_path(article)
     expect(page).to have_content(article.title)
   end
 end

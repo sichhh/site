@@ -1,16 +1,12 @@
 require "rails_helper"
 
 RSpec.feature "Creating an Article", type: :feature do
-  let!(:user) do
-    User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
-                 password: "securepassword")
-  end
+  include Features
+
+  let(:user) { create(:user) }
 
   before do
-    visit new_user_session_path
-    fill_in "user[email]", with: "denis@example.com"
-    fill_in "user[password]", with: "securepassword"
-    click_on "Log in"
+    sign_in(user)
   end
 
   scenario "User can create an article" do

@@ -1,24 +1,17 @@
 require "rails_helper"
 
 RSpec.feature "Updating a Comment", type: :feature do
-  let!(:user) do
-    User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
-                 password: "securepassword")
-  end
+  include Features
+
+  let(:user) { create(:user) }
 
   before do
-    visit new_user_session_path
-    fill_in "user[email]", with: "denis@example.com"
-    fill_in "user[password]", with: "securepassword"
-    click_on "Log in"
+    sign_in(user)
   end
 
   scenario "User can update their own comment" do
-    article = Article.create!(title: "Test Article",
-                              body: "This is a test article.",
-                              status: "public",
-                              user: user)
-    Comment.create!(body: "Comment to be updated", status: "public", article: article, user: user)
+    article = create(:article, user: user)
+    create(:comment, article: article, user: user)
 
     visit article_path(article)
 
@@ -30,6 +23,6 @@ RSpec.feature "Updating a Comment", type: :feature do
 
     click_on "Update Comment"
 
-    expect(page).to have_content("Comments")
+    expect(page).to have_content("Updated comment content.")
   end
 end

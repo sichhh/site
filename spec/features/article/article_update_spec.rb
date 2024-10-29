@@ -1,28 +1,21 @@
 require "rails_helper"
 
-RSpec.feature "Updating an Article", type: :feature do
-  let!(:user) do
-    User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
-                 password: "securepassword")
-  end
+RSpec.feature "Deleting an Article", type: :feature do
+  include Features
+
+  let(:user) { create(:user) }
 
   before do
-    visit new_user_session_path
-    fill_in "user[email]", with: "denis@example.com"
-    fill_in "user[password]", with: "securepassword"
-    click_on "Log in"
+    sign_in(user)
   end
 
-  scenario "User can update their own article" do
-    article = Article.create!(title: "Test Article", body: "This is a test article.", status: "public", user: user)
+  scenario "User can delete their own article" do
+    article = create(:article, user: user)
 
-    visit edit_article_path(article)
+    visit article_path(article)
 
-    fill_in "article[title]", with: "Updated Article"
-    fill_in "article[body]", with: "Updated content for the article."
-    select "public", from: "article[status]"
+    click_on "Destroy"
 
-    click_on "Update Article"
-    expect(page).to have_content("Edit")
+    expect(page).not_to have_content(article.title)
   end
 end
