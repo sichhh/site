@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Создание статьи", type: :feature do
+RSpec.feature "Creating an Article", type: :feature do
   let!(:user) do
     User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
                  password: "securepassword")
@@ -13,7 +13,7 @@ RSpec.feature "Создание статьи", type: :feature do
     click_on "Log in"
   end
 
-  scenario "пользователь может создать статью" do
+  scenario "User can create an article" do
     visit new_article_path
 
     fill_in "article[title]", with: "New Article"

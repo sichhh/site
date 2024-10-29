@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "обновление коментария", type: :feature do
+RSpec.feature "Updating a Comment", type: :feature do
   let!(:user) do
     User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
                  password: "securepassword")
@@ -13,7 +13,7 @@ RSpec.feature "обновление коментария", type: :feature do
     click_on "Log in"
   end
 
-  scenario "пользователь может обновить свой комментарий" do
+  scenario "User can update their own comment" do
     article = Article.create!(title: "Test Article",
                               body: "This is a test article.",
                               status: "public",
@@ -26,7 +26,7 @@ RSpec.feature "обновление коментария", type: :feature do
 
     click_on "Edit"
 
-    fill_in "comment[body]", with: "Updated comment content." # Исправляем на 'body'
+    fill_in "comment[body]", with: "Updated comment content."
 
     click_on "Update Comment"
 

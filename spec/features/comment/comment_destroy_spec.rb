@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "удаление комментария", type: :feature do
+RSpec.feature "Deleting a Comment", type: :feature do
   let!(:user) do
     User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
                  password: "securepassword")
@@ -13,7 +13,7 @@ RSpec.feature "удаление комментария", type: :feature do
     click_on "Log in"
   end
 
-  scenario "пользователь может удалить свой комментарий" do
+  scenario "User can delete their own comment" do
     article = Article.create!(title: "Test Article",
                               body: "This is a test article.",
                               status: "public",

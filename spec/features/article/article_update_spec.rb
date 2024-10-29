@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "обновление  статьи", type: :feature do
+RSpec.feature "Updating an Article", type: :feature do
   let!(:user) do
     User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
                  password: "securepassword")
@@ -13,7 +13,7 @@ RSpec.feature "обновление  статьи", type: :feature do
     click_on "Log in"
   end
 
-  scenario "пользователь может обновить свою статью" do
+  scenario "User can update their own article" do
     article = Article.create!(title: "Test Article", body: "This is a test article.", status: "public", user: user)
 
     visit edit_article_path(article)

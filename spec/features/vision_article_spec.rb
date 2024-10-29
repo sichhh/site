@@ -1,12 +1,10 @@
-require "rails_helper"
-
-RSpec.feature "виденье статьи", type: :feature do
+RSpec.feature "Viewing Articles", type: :feature do
   let!(:user) do
     User.create!(first_name: "Denis", last_name: "Zaharov", age: 25, email: "denis@example.com",
                  password: "securepassword")
   end
 
-  scenario "гостевой пользователь видит статьи" do
+  scenario "Guest user can see articles" do
     article = Article.create!(title: "Test Article",
                               body: "This is a test article.",
                               status: "public",
@@ -17,7 +15,7 @@ RSpec.feature "виденье статьи", type: :feature do
     expect(page).to have_content(article.title)
   end
 
-  scenario "зарегистрированный пользователь видит все статьи" do
+  scenario "Registered user can see all articles" do
     article = Article.create!(title: "Test Article",
                               body: "This is a test article.",
                               status: "public",
