@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Comment, type: :model do
   let(:comment) { build(:comment) }
@@ -22,4 +22,4 @@ RSpec.describe Comment, type: :model do
     comment.status = "invalid_status"
     expect(comment).not_to be_valid
   end
-end 
+end
