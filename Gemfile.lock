@@ -184,6 +184,9 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.8)
+    pg_search (2.3.7)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     psych (5.1.2)
       stringio
     puma (6.4.3)
@@ -343,6 +346,7 @@ DEPENDENCIES
   jbuilder
   mini_magick
   pg
+  pg_search
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.2)
   rspec-rails

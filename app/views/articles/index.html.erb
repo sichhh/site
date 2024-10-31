@@ -16,4 +16,5 @@
 <% if current_user %>
   <%= link_to 'New Article', new_article_path %>
   <%= link_to 'Edit Profile', edit_user_path(current_user) %>
+  <%= link_to 'Search User', users_search_path %>
 <% end %>

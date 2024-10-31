@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   end
 
   def search
-    @users = User.where("first_name ILIKE ? OR last_name ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    @users = User.search_by_name_and_email(params[:query]) if params[:query].present?
   end
 
   private
