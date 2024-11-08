@@ -1,10 +1,8 @@
-require "rails_helper"
-
 RSpec.describe CommentPolicy do
-  let(:user) { create(:user) }
-  let(:article) { create(:article, user: user) }
-  let(:comment) { create(:comment, article: article, user: user) }
-  let(:other_user) { create(:user) }
+  let(:user) { create :user }
+  let(:article) { create :article, user: user }
+  let(:comment) { create :comment, article: article, user: user }
+  let(:other_user) { create :user }
 
   shared_examples "access rights check" do |action|
     subject { policy.apply(action) }
@@ -27,5 +25,13 @@ RSpec.describe CommentPolicy do
 
   describe "#destroy?" do
     it_behaves_like "access rights check", :destroy?
+  end
+
+  describe "#update?" do
+    it_behaves_like "access rights check", :update?
+  end
+
+  describe "#edit?" do
+    it_behaves_like "access rights check", :edit?
   end
 end

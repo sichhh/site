@@ -1,9 +1,7 @@
-require "rails_helper"
-
 RSpec.describe ArticlePolicy do
-  let(:user) { create(:user) }
-  let(:article) { create(:article, user: user) }
-  let(:other_user) { create(:user) }
+  let(:user) { create :user }
+  let(:article) { create :article, user: user }
+  let(:other_user) { create :user }
 
   shared_examples "access rights check" do |action|
     subject { policy.apply(action) }
@@ -26,5 +24,13 @@ RSpec.describe ArticlePolicy do
 
   describe "#update?" do
     it_behaves_like "access rights check", :update?
+  end
+
+  describe "#edit?" do
+    it_behaves_like "access rights check", :edit?
+  end
+
+  describe "#destroy?" do
+    it_behaves_like "access rights check", :destroy?
   end
 end

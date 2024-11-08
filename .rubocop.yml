@@ -26,3 +26,6 @@ Style/StringLiterals:
 
 Bundler/OrderedGems:
   Enabled: true
+
+Metrics/BlockLength:
+  AllowedMethods: ['describe', 'context']

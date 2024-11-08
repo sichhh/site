@@ -1,10 +1,8 @@
-require "rails_helper"
-
 RSpec.feature "Viewing Articles", type: :feature do
   include Features
 
-  let(:user) { create(:user) }
-  let(:article) { create(:article, user: user) }
+  let(:user) { create :user }
+  let(:article) { create :article, user: user }
 
   scenario "Guest user can see articles" do
     visit article_path(article)

@@ -1,9 +1,7 @@
-require "rails_helper"
-
 RSpec.feature "Creating an Article", type: :feature do
   include Features
 
-  let(:user) { create(:user) }
+  let(:user) { create :user }
 
   before do
     sign_in(user)

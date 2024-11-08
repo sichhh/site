@@ -1,8 +1,6 @@
-require "rails_helper"
-
 RSpec.describe Comment, type: :model do
-  let(:user) { create(:user) }
-  let(:comment) { build(:comment, user: user) }
+  let(:user) { create :user }
+  let(:comment) { build :comment, user: user }
 
   it "returns invalid comment without a commenter" do
     comment.user = nil

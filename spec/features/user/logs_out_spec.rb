@@ -1,8 +1,6 @@
-require "rails_helper"
-
 RSpec.feature "User Logout", type: :feature do
   let(:user) do
-    create(:user, first_name: "test", last_name: "test", email: "test@example.com", password: "securepassword")
+    create :user, first_name: "test", last_name: "test", email: "test@example.com", password: "securepassword"
   end
 
   scenario "user logs out" do

@@ -1,8 +1,6 @@
-require "rails_helper"
-
 RSpec.feature "User Authentication with Incorrect Credentials", type: :feature do
   let(:user) do
-    create(:user, first_name: "test", last_name: "test", email: "test@example.com", password: "securepassword")
+    create :user, first_name: "test", last_name: "test", email: "test@example.com", password: "securepassword"
   end
 
   scenario "user tries to log in with incorrect password" do

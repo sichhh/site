@@ -1,7 +1,5 @@
-require "rails_helper"
-
 RSpec.describe Article, type: :model do
-  let(:article) { build(:article) }
+  let(:article) { build :article }
 
   it "returns invalid article without a title" do
     article.title = nil

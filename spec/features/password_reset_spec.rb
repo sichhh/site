@@ -1,5 +1,5 @@
 RSpec.feature "Password Reset", type: :feature do
-  let(:user) { create(:user) }
+  let(:user) { create :user }
 
   scenario "User can reset their password" do
     visit new_user_session_path

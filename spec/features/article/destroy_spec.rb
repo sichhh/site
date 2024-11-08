@@ -1,17 +1,14 @@
-require "rails_helper"
-
 RSpec.feature "Deleting an Article", type: :feature do
   include Features
 
-  let(:user) { create(:user) }
+  let(:user) { create :user }
+  let!(:article) { create :article, user: user }
 
   before do
     sign_in(user)
   end
 
   scenario "User can delete their own article" do
-    article = create(:article, user: user)
-
     visit article_path(article)
 
     click_on "Destroy"
