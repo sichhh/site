@@ -29,4 +29,3 @@ Bundler/OrderedGems:
 
 Metrics/BlockLength:
   AllowedMethods: ['describe', 'context']
-  
