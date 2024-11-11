@@ -3,11 +3,13 @@ source "https://rubygems.org"
 ruby "3.1.2"
 
 gem "action_policy"
+gem "bootstrap"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
+gem "sassc-rails"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
