@@ -4,7 +4,13 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.all
     order = params[:order] || "desc"
-    @articles = Article.sorted_by(order).page(params[:page]).per(2)
+    sort_by = params[:sort_by] || "created_at"
+
+    @articles = if sort_by == "title"
+                  Article.sorted_by_title(order).page(params[:page]).per(2)
+                else
+                  Article.sorted_by(order).page(params[:page]).per(2)
+                end
   end
 
   def show

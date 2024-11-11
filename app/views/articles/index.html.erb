@@ -3,22 +3,28 @@
 <%= link_to "Сортировать по дате (по возрастанию)", articles_path(order: 'asc') %>
 <%= link_to "Сортировать по дате (по убыванию)", articles_path(order: 'desc') %>
 
+<br>
+
+<%= link_to "Сортировать по названию (по возрастанию)", articles_path(sort_by: 'title', order: 'asc') %>
+<%= link_to "Сортировать по названию (по убыванию)", articles_path(sort_by: 'title', order: 'desc') %>
+
 <div id="articles">
-<ul>
-  <% @articles.each do |article| %>
-    <% unless article.archived? %>
-      <li>
-        <%= link_to article.title, article_path(article) %>
-         <% if user_signed_in? && current_user == article.user %>
-          <%= link_to 'Edit', edit_article_path(article) %>
-         <% end %>
-      </li>
+  <ul>
+    <% @articles.each do |article| %>
+      <% unless article.archived? %>
+        <li>
+          <%= link_to article.title, article_path(article) %>
+           <% if user_signed_in? && current_user == article.user %>
+            <%= link_to 'Edit', edit_article_path(article) %>
+           <% end %>
+        </li>
+      <% end %>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
 
-<% if current_user %>
+  <% if current_user %>
   <%= link_to 'New Article', new_article_path %>
-<% end %>
+  <% end %>
 
-<%= paginate @articles %>
+  <%= paginate @articles %>
+</div> 
