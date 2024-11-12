@@ -345,7 +345,7 @@ DEPENDENCIES
   debug
   devise
   dotenv
-  error_highlight (>= 0.6.0)
+  error_highlight
   factory_bot_rails
   faker
   importmap-rails
