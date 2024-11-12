@@ -4,11 +4,5 @@ FactoryBot.define do
     body { Faker::Lorem.paragraph }
     user
     status { "public" }
-
-    trait :with_comments do
-      after(:create) do |article|
-        create_list(:comment, 3, article: article)
-      end
-    end
   end
 end

@@ -8,7 +8,7 @@ RSpec.feature "Creating a Comment", type: :feature do
     sign_in(user)
   end
 
-  scenario "User can create a comment" do
+  scenario "creates comment" do
     visit article_path(article)
 
     fill_in "comment[body]", with: "This is a comment."

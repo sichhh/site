@@ -8,7 +8,7 @@ RSpec.feature "Updating an Article", type: :feature do
     sign_in(user)
   end
 
-  scenario "User can update their own article" do
+  scenario "update article" do
     visit article_path(article)
 
     click_on "Edit"

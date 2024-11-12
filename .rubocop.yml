@@ -12,6 +12,8 @@ AllCops:
     - 'db/**/*'
     - 'vendor/**/*'
     - 'tmp/**/*'
+    - 'spec/**/*' 
+    
 Layout/LineLength:
  Max: 120
 

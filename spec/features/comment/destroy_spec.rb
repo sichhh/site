@@ -9,7 +9,7 @@ RSpec.feature "Deleting a Comment", type: :feature do
     sign_in(user)
   end
 
-  scenario "User can delete their own comment" do
+  scenario "delete comment" do
     visit article_path(article)
 
     click_on "Destroy Comment"

@@ -23,6 +23,20 @@ RSpec.describe CommentPolicy do
     end
   end
 
+  describe "#create?" do
+    subject { policy.apply(:create?) }
+
+    context "when the user is authenticated" do
+      let(:policy) { described_class.new(comment, user: user) }
+      it { is_expected.to eq true }
+    end
+
+    context "when the user is not authenticated" do
+      let(:policy) { described_class.new(comment, user: nil) }
+      it { is_expected.to eq false }
+    end
+  end
+
   describe "#destroy?" do
     it_behaves_like "access rights check", :destroy?
   end

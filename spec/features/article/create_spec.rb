@@ -7,7 +7,7 @@ RSpec.feature "Creating an Article", type: :feature do
     sign_in(user)
   end
 
-  scenario "User can create an article" do
+  scenario "creates article" do
     visit new_article_path
 
     fill_in "article[title]", with: "New Article"

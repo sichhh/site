@@ -22,6 +22,34 @@ RSpec.describe ArticlePolicy do
     end
   end
 
+  describe "#new?" do
+    subject { policy.apply(:new?) }
+
+    context "when the user is authenticated" do
+      let(:policy) { described_class.new(article, user: user) }
+      it { is_expected.to eq true }
+    end
+
+    context "when the user is not authenticated" do
+      let(:policy) { described_class.new(article, user: nil) }
+      it { is_expected.to eq false }
+    end
+  end
+
+  describe "#create?" do
+    subject { policy.apply(:create?) }
+
+    context "when the user is authenticated" do
+      let(:policy) { described_class.new(article, user: user) }
+      it { is_expected.to eq true }
+    end
+
+    context "when the user is not authenticated" do
+      let(:policy) { described_class.new(article, user: nil) }
+      it { is_expected.to eq false }
+    end
+  end
+
   describe "#update?" do
     it_behaves_like "access rights check", :update?
   end

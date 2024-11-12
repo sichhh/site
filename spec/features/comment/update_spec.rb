@@ -9,7 +9,7 @@ RSpec.feature "Updating a Comment", type: :feature do
     sign_in(user)
   end
 
-  scenario "User can update their own comment" do
+  scenario "update comment" do
     visit article_path(article)
 
     click_on "Edit Comment"

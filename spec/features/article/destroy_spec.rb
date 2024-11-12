@@ -8,7 +8,7 @@ RSpec.feature "Deleting an Article", type: :feature do
     sign_in(user)
   end
 
-  scenario "User can delete their own article" do
+  scenario "delete article" do
     visit article_path(article)
 
     click_on "Destroy"
