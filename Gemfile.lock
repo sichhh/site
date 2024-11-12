@@ -127,7 +127,6 @@ GEM
     diff-lcs (1.5.1)
     dotenv (3.1.4)
     drb (2.2.1)
-    error_highlight (0.6.0)
     erubi (1.13.0)
     factory_bot (6.5.0)
       activesupport (>= 5.0.0)
@@ -345,7 +344,6 @@ DEPENDENCIES
   debug
   devise
   dotenv
-  error_highlight
   factory_bot_rails
   faker
   importmap-rails
