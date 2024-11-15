@@ -1,53 +1,37 @@
 RSpec.describe ArticlePolicy do
-  let(:user) { create :user }
-  let(:article) { create :article, user: user }
-  let(:other_user) { create :user }
+  let(:article) { create :article }
 
   shared_examples "access rights check" do |action|
-    subject { policy.apply(action) }
+    subject { described_class.new(article, user: user).apply(action) }
 
     context "when the user is not the author" do
-      let(:policy) { described_class.new(article, user: other_user) }
+      let(:user) { create :user }
       it { is_expected.to eq false }
     end
 
     context "when the user is the author" do
-      let(:policy) { described_class.new(article, user: user) }
+      let(:user) { article.user } 
       it { is_expected.to eq true }
     end
 
     context "when the user is not authenticated" do
-      let(:policy) { described_class.new(article, user: nil) }
+      let(:user) { nil }
       it { is_expected.to eq false }
     end
   end
 
   describe "#new?" do
-    subject { policy.apply(:new?) }
+    let(:user) { create :user }
+    subject { described_class.new(article, user: user).apply(:new?) }
 
-    context "when the user is authenticated" do
-      let(:policy) { described_class.new(article, user: user) }
-      it { is_expected.to eq true }
-    end
-
-    context "when the user is not authenticated" do
-      let(:policy) { described_class.new(article, user: nil) }
-      it { is_expected.to eq false }
-    end
+    it { is_expected.to eq true }
   end
 
   describe "#create?" do
-    subject { policy.apply(:create?) }
+    let(:user) { create :user }
+    subject { described_class.new(article, user: user).apply(:create?) }
 
-    context "when the user is authenticated" do
-      let(:policy) { described_class.new(article, user: user) }
-      it { is_expected.to eq true }
-    end
-
-    context "when the user is not authenticated" do
-      let(:policy) { described_class.new(article, user: nil) }
-      it { is_expected.to eq false }
-    end
+    it { is_expected.to eq true }
   end
 
   describe "#update?" do
@@ -61,4 +45,4 @@ RSpec.describe ArticlePolicy do
   describe "#destroy?" do
     it_behaves_like "access rights check", :destroy?
   end
-end
+end 
