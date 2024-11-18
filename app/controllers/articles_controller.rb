@@ -2,15 +2,7 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: %i[show edit update destroy]
 
   def index
-    @articles = Article.all
-    order = params[:order] || "desc"
-    sort_by = params[:sort_by] || "created_at"
-
-    @articles = if sort_by == "title"
-                  Article.sorted_by_title(order).page(params[:page]).per(2)
-                else
-                  Article.sorted_by(order).page(params[:page]).per(2)
-                end
+    @articles = ArticlePage.new(params).call
   end
 
   def show
