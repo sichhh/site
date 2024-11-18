@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.1.2"
 
+gem "action_policy"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
@@ -52,7 +53,6 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "action_policy"
   gem "debug", platforms: %i[mri mswin mswin64 mingw x64_mingw]
   gem "dotenv"
   gem "rspec-rails"
