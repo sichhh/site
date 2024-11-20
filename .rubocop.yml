@@ -8,7 +8,11 @@ AllCops:
  TargetRubyVersion: 3.0
  NewCops: disable
  Exclude:
- 
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'spec/**/*' 
     
 Layout/LineLength:
  Max: 120
