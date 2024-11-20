@@ -5,5 +5,5 @@ class Article < ApplicationRecord
 
   validates :title, presence: true
   validates :body, presence: true, length: { minimum: 10 }
-  scope :sorted_by, ->(field, order) { order(field => order) }
+  scope :sorted_by, ->(field, sort_type) { order(field => sort_type) }
 end
