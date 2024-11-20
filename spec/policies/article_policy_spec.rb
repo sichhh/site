@@ -10,7 +10,7 @@ RSpec.describe ArticlePolicy do
     end
 
     context "when the user is the author" do
-      let(:user) { article.user } 
+      let(:user) { article.user }
       it { is_expected.to eq true }
     end
 
@@ -45,4 +45,4 @@ RSpec.describe ArticlePolicy do
   describe "#destroy?" do
     it_behaves_like "access rights check", :destroy?
   end
-end 
+end
