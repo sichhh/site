@@ -17,5 +17,5 @@ class ArticlesQuery
 
   private
 
-  attr_reader :field, :sort_type, :page, :per_page 
+  attr_reader :field, :sort_type, :page, :per_page
 end
