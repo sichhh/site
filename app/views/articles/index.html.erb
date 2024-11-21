@@ -1,12 +1,12 @@
 <h1>Articles</h1>
 
-<%= link_to "Сортировать по дате (по возрастанию)", articles_path(order: 'asc') %>
-<%= link_to "Сортировать по дате (по убыванию)", articles_path(order: 'desc') %>
+<%= link_to "Сортировать по дате (по возрастанию)", articles_path(field: 'created_at', sort_type: 'asc') %>
+<%= link_to "Сортировать по дате (по убыванию)", articles_path(field: 'created_at', sort_type: 'desc') %>
 
 <br>
 
-<%= link_to "Сортировать по названию (по возрастанию)", articles_path(sort_by: 'title', order: 'asc') %>
-<%= link_to "Сортировать по названию (по убыванию)", articles_path(sort_by: 'title', order: 'desc') %> 
+<%= link_to "Сортировать по названию (по возрастанию)", articles_path(field: 'title', sort_type: 'asc') %>
+<%= link_to "Сортировать по названию (по убыванию)", articles_path(field: 'title', sort_type: 'desc') %> 
 
 <div id="articles">
   <ul>
