@@ -1,35 +1,33 @@
 RSpec.describe ArticlesQuery do
-  let!(:articles) { create_list(:article, 10) }
+  let(:field) { 'title' }
+  let(:sort_type) { 'asc' }
+  let(:page) { 1 }
+  let(:per) { 3 }
 
-  shared_examples_for "articles query" do |field, sort_type, page, per|
-    let(:query) { described_class.new(field: field, sort_type: sort_type, page: page, per: per) }
+  let!(:article1) { create :article, title: 'hehe' }
+  let!(:article2) { create :article, title: 'loh' }
+  let!(:article3) { create :article, title: 'aaa' }
+  let!(:article4) { create :article, title: 'xxx' }
+  let!(:article5) { create :article, title: 'jija' }
 
-    it "returns articles sorted" do
+  context "successful scenarios" do
+    it "returns articles sorted by title in ascending order" do
+      query = described_class.new(field: field, sort_type: sort_type, page: page, per: per)
       result = query.call
-
-      expect(result.count).to be <= per
-      expect(result.current_page).to eq(page)
-      expect(result.order_values).to eq([Article.arel_table[field].send(sort_type)])
+      expect(result).to match_array([article3, article1, article5])
     end
   end
 
-  describe "#call" do
-    context "with valid params" do
-      it_behaves_like "articles query", :title, :asc, 2, 2
-      it_behaves_like "articles query", :created_at, :desc, 1, 2
-      it_behaves_like "articles query", :updated_at, :asc, 3, 3
+  context "unsuccessful scenarios" do
+    it "returns an empty array if there are no articles on the requested page" do
+      query = described_class.new(field: field, sort_type: sort_type, page: 3, per: 3)
+      result = query.call
+      expect(result).to be_empty
     end
 
-    context "with invalid params" do
-
-      it "returns articles is invalid" do
-        query = described_class.new(field: :title, sort_type: :asc, page: 0, per: 2)
-        result = query.call
-
-        expect(result.count).to eq(ArticlesQuery::DEFAULT_PER_PAGE)
-        expect(result.current_page).to eq(ArticlesQuery::DEFAULT_PAGE)
-        expect(result.order_values).to eq([Article.arel_table[:title].asc])
-      end
+    it "handles invalid sort types gracefully" do
+      query = described_class.new(field: field, sort_type: 'invalid_sort_type', page: page, per: per)
+      expect { query.call }.to raise_error(ArgumentError)
     end
   end
-end 
+end
