@@ -5,6 +5,8 @@ on:
     branches: 
       - main
   pull_request:
+    branches:
+      - Add-pagination-and-sorting
   workflow_dispatch:
 
 jobs:
