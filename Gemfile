@@ -6,6 +6,8 @@ gem "action_policy"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
+gem "kaminari"
+gem "pry"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
 
