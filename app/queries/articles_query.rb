@@ -15,6 +15,10 @@ class ArticlesQuery
     Article.sorted_by(field, sort_type).page(page).per(per_page)
   end
 
+  def total_pages
+    (Article.count / per_page.to_f).ceil
+  end
+
   private
 
   attr_reader :field, :sort_type, :page, :per_page

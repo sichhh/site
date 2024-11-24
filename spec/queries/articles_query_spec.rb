@@ -16,6 +16,23 @@ RSpec.describe ArticlesQuery do
       result = query.call
       expect(result).to match_array([article3, article1, article5])
     end
+
+    it "returns articles sorted by title in descending order" do
+      query = described_class.new(field: field, sort_type: 'desc', page: page, per: per)
+      result = query.call
+      expect(result).to match_array([article4, article2, article5]) 
+    end
+
+    it "returns the correct number of articles per page" do
+      query = described_class.new(field: field, sort_type: sort_type, page: page, per: per)
+      result = query.call
+      expect(result.size).to eq(per) 
+    end
+
+    it "returns the correct total pages count" do
+      query = described_class.new(field: field, sort_type: sort_type, page: page, per: per)
+      expect(query.total_pages).to eq(2)
+    end
   end
 
   context "unsuccessful scenarios" do
@@ -30,4 +47,4 @@ RSpec.describe ArticlesQuery do
       expect { query.call }.to raise_error(ArgumentError)
     end
   end
-end
+end 
