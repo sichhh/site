@@ -12,8 +12,12 @@ class UsersController < ApplicationController
     end
   end
 
-  def search
-    @users = User.search_by_name_and_email(params[:query]) if params[:query].present?
+  def index
+    @users = if params[:query].present?
+               User.search_by_name_and_email(params[:query])
+             else
+               User.all
+             end
   end
 
   private

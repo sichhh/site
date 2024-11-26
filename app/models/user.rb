@@ -3,7 +3,7 @@ class User < ApplicationRecord
   pg_search_scope :search_by_name_and_email,
                   against: %i[first_name last_name email],
                   using: {
-                    tsearch: { prefix: false }
+                    tsearch: { prefix: true }
                   }
 
   has_many :articles, dependent: :destroy
