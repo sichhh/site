@@ -1,4 +1,4 @@
-class CommentPolicy < ActionPolicy::Base
+class CommentPolicy < ApplicationPolicy
   def create?
     user.present?
   end
