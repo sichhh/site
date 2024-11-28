@@ -10,10 +10,9 @@ class UsersSearchQuery
 
   def call
     users = User.where(
-      "first_name ILIKE :query OR last_name ILIKE :query OR email ILIKE :query",
+      @query.blank? ? "TRUE" : "first_name ILIKE :query OR last_name ILIKE :query OR email ILIKE :query",
       query: "%#{@query}%"
     )
-    users = User.all if @query.blank?
     users.page(@page).per(@per_page)
   end
 
