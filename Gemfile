@@ -10,6 +10,7 @@ gem "devise"
 gem "image_processing"
 gem "kaminari"
 gem "mini_magick"
+gem "pg_search"
 gem "pry"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
@@ -37,8 +38,6 @@ gem "stimulus-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-
-gem "pg_search"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
