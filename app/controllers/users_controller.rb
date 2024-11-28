@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = UsersSearchQuery.new(params).call
+    @users = UsersSearchQuery.new(params[:query], params[:page], params[:per_page]).call
   end
 
   private

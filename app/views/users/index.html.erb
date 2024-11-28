@@ -20,4 +20,6 @@
   <% elsif params[:query].present? %> 
     <p>Пользователи не найдены.</p>
   <% end %> 
+
+  <%= paginate @users %>
 <% end %>
