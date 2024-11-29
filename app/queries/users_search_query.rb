@@ -9,14 +9,19 @@ class UsersSearchQuery
   end
 
   def call
-    users = User.where(
-      @query.blank? ? "TRUE" : "first_name ILIKE :query OR last_name ILIKE :query OR email ILIKE :query",
-      query: "%#{@query}%"
-    )
-    users.page(@page).per(@per_page)
+    users = search_users(query)
+    users.page(page).per(per_page)
   end
 
   private
 
   attr_reader :query, :page, :per_page
+
+  def search_users(query)
+    if query.blank?
+      User.all
+    else
+      User.where("first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?", "%#{query}%", "%#{query}%", "%#{query}%")
+    end
+  end
 end
