@@ -21,7 +21,8 @@ class UsersSearchQuery
     if query.blank?
       User.all
     else
-      User.where("first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?", "%#{query}%", "%#{query}%", "%#{query}%")
+      User.where("first_name ILIKE :query OR last_name ILIKE :query OR email ILIKE :query",
+                 query: "%#{@query}%")
     end
   end
 end
