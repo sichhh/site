@@ -8,7 +8,6 @@ gem "bundler-audit"
 gem "devise"
 gem "image_processing"
 gem "interactor"
-gem "image_processing"
 gem "kaminari"
 gem "mini_magick"
 gem "pry"
@@ -84,4 +83,3 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
 end
-
