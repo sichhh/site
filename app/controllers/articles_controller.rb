@@ -21,12 +21,12 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = current_user.articles.build(article_params)
-    authorize! @article
+    create_article = CreateArticleInteractor::Create.call(user: current_user, params: article_params)
 
-    if @article.save
-      redirect_to @article
+    if create_article.success?
+      redirect_to create_article.article, notice: "Статья успешно создана."
     else
+      @article = Article.new(article_params)
       render :new, status: :unprocessable_entity
     end
   end
