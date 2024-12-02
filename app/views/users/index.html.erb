@@ -1,0 +1,25 @@
+<h1> Поиск пользователей </h1>
+
+<% if user_signed_in? %>
+  <%= form_with url: users_path, method: :get, local: true do |form| %>
+    <%= form.label :query, "Введите данные:" %>
+    <%= form.text_field :query %>
+    <%= form.submit "Найти" %>
+  <% end %>
+
+  <% if @users.present? %> 
+    <h2>Результаты поиска</h2>
+    <ul>
+      <% @users.each do |user| %>
+        <li>
+          <%= image_tag (user.avatar.attached? ? user.avatar : 'default_avatar.webp'), size: '100x100' %> 
+          <%= user.first_name %> <%= user.last_name %> (<%= user.email %>)
+        </li>
+      <% end %>
+    </ul>
+  <% elsif params[:query].present? %> 
+    <p>Пользователи не найдены.</p>
+  <% end %> 
+
+  <%= paginate @users %>
+<% end %>

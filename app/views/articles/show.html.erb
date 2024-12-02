@@ -1,5 +1,22 @@
 <h1><%= @article.title %></h1>
 
+<div class="article-info">
+ 
+  <div class="author-details">
+    <p>Автор: <%= @article.user.first_name %></p> 
+  </div>
+  <div class="author-avatar">
+  <% if @article.user.avatar.attached? %>
+    <%= image_tag @article.user.avatar_thumbnail, class: 'avatar' %>
+  <% else %>
+    <%= image_tag 'default_avatar.webp', size: '200x200', class: 'avatar' %> 
+  <% end %>
+</div> 
+</div>
+
+<div class="body">
+    <h2>Body</h2> 
+</div>
 <p><%= @article.body %></p>
 
 <ul>
@@ -14,10 +31,10 @@
     <% end %>
 </ul>
 
-<h2>Comments</h2>
+<h3>Comments</h3>
 <%= render @article.comments %>
 
 <% if user_signed_in? %>
-<h2>Add a comment:</h2>
+<h3>Add a comment:</h3>
 <%= render 'comments/form' %>
-<% end %>
+<% end %> 

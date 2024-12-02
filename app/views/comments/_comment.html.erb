@@ -1,26 +1,38 @@
 <% unless comment.archived? || comment.new_record? %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.user.first_name %>
-  </p>
+  <div class="comment-container"> 
+  
+    <div class="comment-content">
+      <p>
+        <strong>Commenter:</strong>
+        <%= comment.user.first_name %>
+      </p>
+ <div class="comment-avatar">
+      <% if comment.user.avatar.attached? %>
+        <%= image_tag comment.user.avatar.variant(resize_to_limit: [50, 50]), class: 'avatar' %>
+      <% else %>
+        <%= image_tag 'default_avatar.webp', size: '50x50', class: 'avatar' %>
+      <% end %>
+    </div>
+      <p>
+        <strong>Comment:</strong>
+        <%= comment.body %>
+      </p>
 
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
+      <p>
+        <% if allowed_to?(:destroy?, comment) %>
+          <%= link_to "Destroy Comment", [comment.article, comment], data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Are you sure?"
+                      } %>
+        <% end %>
+      </p>
 
- <p>
-  <% if allowed_to?(:destroy?, comment) %>
-    <%= link_to "Destroy Comment", [comment.article, comment], data: {
-                  turbo_method: :delete,
-                  turbo_confirm: "Are you sure?"
-                } %>
-  <% end %>
-</p>
+      <% if current_user == comment.user %>
+        <p>
+          <%= link_to "Edit Comment", article_comment_path(comment.article, comment), class: "btn btn-primary" %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+<% end %> 
 
-  <% if current_user == comment.user %>
-    <p>
-      <%= link_to "Edit Comment", article_comment_path(comment.article, comment), class: "btn btn-primary" %>
-    </p>
-  <% end %>
-<% end %>

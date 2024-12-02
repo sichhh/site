@@ -1,0 +1,45 @@
+<h1>Edit Profile</h1>
+
+<%= form_with model: @user, local: true do |form| %>
+  <div class="profile-info">
+    <div class="avatar">
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar.variant(resize_to_limit: [200, 200]) %>
+      <% else %>
+        <%= image_tag 'default_avatar.webp', size: '200x200' %> 
+      <% end %>
+    </div>
+
+    <div class="details">
+      <div class="field">
+        <%= form.label :first_name %>
+        <%= form.text_field :first_name %>
+      </div>
+
+      <div class="field">
+        <%= form.label :last_name %>
+        <%= form.text_field :last_name %>
+      </div>
+
+      <div class="field">
+        <%= form.label :email %>
+        <%= form.email_field :email %>
+      </div>
+
+      <div class="field">
+        <%= form.label :age %>
+        <%= form.number_field :age %>
+      </div>
+
+      <div class="field">
+        <%= form.label :avatar %>
+        <%= form.file_field :avatar %>
+      </div>
+    </div> 
+  </div> 
+
+  <div class="actions">
+    <%= form.submit 'Update Profile' %>
+  </div>
+<% end %> 
+
