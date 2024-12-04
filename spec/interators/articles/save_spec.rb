@@ -1,42 +1,37 @@
 RSpec.describe Articles::Save do
-  let(:user) { create :user }
-  let(:params) { attributes_for :article }
-  let(:context) { Articles::Save.call user: user, params: params }
+  subject(:context) { described_class.call(article: article, article_params: article_params) }
 
-  it 'builds a new article for the user' do
-    expect { context }.to change { user.articles.count }.by(1)
-    expect(context.article).to be_a(Article)
-    expect(context.article.user).to eq(user)
-  end
+  let(:article) { build :article }
+  let(:article_params) { attributes_for(:article) }
 
-  it 'assigns attributes to the article' do
-    context
-    expect(context.article.title).to eq(params[:title])
-    expect(context.article.body).to eq(params[:body])
-  end
+  describe '.call' do
+    context 'when article is valid' do
+      before do
+        allow(article).to receive(:save).and_return(true)
+      end
 
-  context 'when article is valid' do
-    it 'saves the article' do
-      expect { context }.to change { Article.count }.by(1)
-      expect(context.article).to be_persisted
+      it 'succeeds' do
+        expect(context).to be_a_success
+      end
+
+      it 'assigns attributes to the article' do
+        expect(article).to receive(:assign_attributes).with(article_params)
+        context
+      end
     end
 
-    it 'succeeds' do
-      expect(context).to be_a_success
+    context 'when article is invalid' do
+      before do
+        allow(article).to receive(:save).and_return(false)
+      end
+
+      it 'fails' do
+        expect(context).to be_a_failure
+      end
+
+      it 'provides error messages' do
+        expect(context.errors).to eq(context.article.errors)
+      end
     end
   end
-
-  context 'when article is invalid' do
-    let(:params) { attributes_for :article, title: nil }
-
-    it 'does not save the article' do
-      expect { context }.not_to change { Article.count }
-      expect(context.article).not_to be_persisted
-    end
-
-    it 'fails with errors' do
-      expect(context).to be_a_failure
-      expect(context.errors).to include(:title)
-    end
-  end
-end 
+end

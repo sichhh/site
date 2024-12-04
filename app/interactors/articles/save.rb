@@ -2,16 +2,16 @@ module Articles
   class Save
     include Interactor
 
-    delegate :article, :params, to: :context
+    delegate :article, :article_params, to: :context
 
     before do
-      context.article ||= context.user.articles.build
+      context.article ||= Article.new
     end
 
     def call
-      article.assign_attributes(params)
+      article.assign_attributes(article_params)
 
-      context.fail!(errors: article.errors) unless article.save
+      context.fail!(errors: context.article.errors) unless article.save
     end
   end
 end

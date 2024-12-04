@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    create_article = Articles::Save.call(user: current_user, params: article_params)
+    create_article = Articles::Create.call(user: current_user, params: article_params)
 
     if create_article.success?
       redirect_to create_article.article, notice: "Статья успешно создана."
@@ -34,7 +34,7 @@ class ArticlesController < ApplicationController
   def update
     authorize! @article
 
-    update_article = Articles::Save.call(article: @article, params: article_params)
+    update_article = Articles::Update.call(article: @article, article_params: article_params)
 
     if update_article.success?
       redirect_to update_article.article
