@@ -2,6 +2,6 @@ module Articles
   class Update
     include Interactor::Organizer
 
-    organize Save
+    organize Articles::Save
   end
 end

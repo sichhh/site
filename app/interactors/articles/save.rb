@@ -11,7 +11,7 @@ module Articles
     def call
       article.assign_attributes(article_params)
 
-      context.fail!(errors: context.article.errors) unless article.save
+      context.fail!(errors: article.errors) unless article.save
     end
   end
 end

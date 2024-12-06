@@ -5,8 +5,10 @@ module Articles
     delegate :id, to: :context
 
     def call
-      article = Article.find(id)
-      context.fail!(errors: article.errors) unless article.destroy
+      article = Article.find_by(id: id)
+      return unless article
+
+        context.fail!(errors: article.errors) unless article.destroy
     end
   end
 end

@@ -2,7 +2,7 @@ module Articles
   class Create
     include Interactor::Organizer
 
-    organize Prepare,
-             Save
+    organize Articles::Create::PrepareParams,
+             Articles::Save
   end
 end

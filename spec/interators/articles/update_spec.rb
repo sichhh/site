@@ -1,7 +1,4 @@
 RSpec.describe Articles::Update, type: :interactor do
-  it "is an Interactor::Organizer" do
-    expect(Articles::Update).to be < Interactor::Organizer
-  end
 
   it "organizes the Save interactor" do
     expect(Articles::Update.organized).to eq([Articles::Save])

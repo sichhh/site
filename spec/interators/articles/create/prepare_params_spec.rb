@@ -1,4 +1,4 @@
-RSpec.describe Articles::Create::Prepare do
+RSpec.describe Articles::Create::PrepareParams do
   subject(:context) { described_class.call(user: user, params: params) }
 
   let(:user) { build :user, id: 1 }

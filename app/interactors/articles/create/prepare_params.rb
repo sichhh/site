@@ -1,6 +1,6 @@
 module Articles
   class Create
-    class Prepare
+    class PrepareParams
       include Interactor
       delegate :user, :params, to: :context
 

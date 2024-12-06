@@ -2,7 +2,7 @@ RSpec.describe Articles::Save do
   subject(:context) { described_class.call(article: article, article_params: article_params) }
 
   let(:article) { build :article }
-  let(:article_params) { attributes_for(:article) }
+  let(:article_params) { attributes_for :article }
 
   describe '.call' do
     context 'when article is valid' do
