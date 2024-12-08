@@ -7,7 +7,11 @@ module Articles
     def call
       article = Article.find_by(id: id)
 
-      context.fail!(errors: article.errors) unless article&.destroy
+      if article.nil?
+        context.fail!(errors: { base: ["Article not found"] })
+      elsif !article.destroy
+        context.fail!(errors: article.errors)
+      end
     end
   end
 end

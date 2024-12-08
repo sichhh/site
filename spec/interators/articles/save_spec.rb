@@ -3,36 +3,36 @@ RSpec.describe Articles::Save do
 
   let(:article) { build :article }
 
-  describe '.call' do
-    context 'when article is valid' do
+  describe ".call" do
+    context "when article is valid" do
       let(:article_params) { attributes_for :article }
 
       before do
         allow(article).to receive(:save).and_return(true)
       end
 
-      it 'succeeds' do
+      it "succeeds" do
         expect(context).to be_a_success
       end
 
-      it 'assigns attributes to the article' do
+      it "assigns attributes to the article" do
         expect(article).to receive(:assign_attributes).with(article_params)
         context
       end
     end
 
-    context 'when article is invalid' do
+    context "when article is invalid" do
       let(:article_params) { attributes_for(:article, title: nil) }
 
       before do
         allow(article).to receive(:save).and_return(false)
       end
 
-      it 'fails' do
+      it "fails" do
         expect(context).to be_a_failure
       end
 
-      it 'provides error messages' do
+      it "provides error messages" do
         expect(context.errors).to eq(context.article.errors)
       end
     end
