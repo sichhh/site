@@ -1,5 +1,5 @@
 RSpec.describe Articles::Destroy do
-  subject(:context) { described_class.call(id: article_id) }
+  subject(:call) { described_class.call(id: article_id) }
 
   let!(:article) { create :article }
   let(:article_id) { article.id }
@@ -9,11 +9,11 @@ RSpec.describe Articles::Destroy do
   describe ".call" do
     context "when article exists" do
       it "destroys the article" do
-        expect { context }.to change { Article.count }.by(-1)
+        expect { call }.to change { Article.count }.by(-1)
       end
 
       it "succeeds" do
-        expect(context).to be_a_success
+        expect(call).to be_a_success
       end
     end
 
@@ -21,8 +21,8 @@ RSpec.describe Articles::Destroy do
       let(:article_id) { nonexistent_article_id }
 
       it "fails the context instead of raising an error" do
-        expect(context).to be_a_failure
-        expect(context.errors[:base]).to include('Article not found')
+        expect(call).to be_a_failure
+        expect(call.errors[:base]).to include('Article not found')
       end
     end
   end
