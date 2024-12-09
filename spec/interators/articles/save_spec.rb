@@ -7,10 +7,6 @@ RSpec.describe Articles::Save do
     context "when article is valid" do
       let(:article_params) { attributes_for :article }
 
-      before do
-        allow(article).to receive(:save).and_return(true)
-      end
-
       it "succeeds" do
         expect(context).to be_a_success
       end
@@ -19,14 +15,15 @@ RSpec.describe Articles::Save do
         expect(article).to receive(:assign_attributes).with(article_params)
         context
       end
+
+      it "saves the article" do
+        expect(article).to receive(:save).and_return(true)
+        context
+      end
     end
 
     context "when article is invalid" do
       let(:article_params) { attributes_for(:article, title: nil) }
-
-      before do
-        allow(article).to receive(:save).and_return(false)
-      end
 
       it "fails" do
         expect(context).to be_a_failure
