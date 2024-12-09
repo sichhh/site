@@ -14,9 +14,13 @@
       <% unless article.archived? %>
         <li>
           <%= link_to article.title, article_path(article) %>
-           <% if user_signed_in? && current_user == article.user %>
-            <%= link_to 'Edit', edit_article_path(article) %>
-           <% end %>
+            <% if user_signed_in? && current_user == article.user %>
+              <%= link_to 'Edit', edit_article_path(article) %>
+              <%= link_to "Destroy", article_path(article), data: { 
+              turbo_method: :delete,
+              turbo_confirm: "Are you sure?" 
+            } %> 
+          <% end %>
         </li>
       <% end %>
     <% end %>
@@ -29,4 +33,5 @@
   <% end %>
 
   <%= paginate @articles %>
-</div> 
+</div>
+

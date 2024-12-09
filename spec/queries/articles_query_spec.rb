@@ -1,8 +1,8 @@
 RSpec.describe ArticlesQuery do
   let(:query) { described_class.new(field: field, sort_type: sort_type, page: page, per: per) }
   let(:result) { query.call }
-  let(:field) { 'title' }
-  let(:sort_type) { 'asc' }
+  let(:field) { "title" }
+  let(:sort_type) { "asc" }
   let(:page) { 1 }
   let(:per) { 3 }
 
