@@ -1,26 +1,36 @@
 <% unless comment.archived? || comment.new_record? %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.user.first_name %>
-  </p>
+  <div class="comment-container mt-3 p-3 border rounded">
+    <div class="d-flex align-items-start">
+      <div class="comment-avatar me-3">
+        <% if comment.user.avatar.attached? %>
+          <%= image_tag comment.user.avatar.variant(resize_to_limit: [50, 50]), class: 'avatar rounded-circle' %>
+        <% else %>
+          <%= image_tag 'default_avatar.webp', size: '50x50', class: 'avatar rounded-circle' %>
+        <% end %>
+      </div>
 
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
+      <div class="comment-content">
+        <p class="mb-1">
+          <strong>Commenter:</strong>
+          <%= comment.user.first_name %>
+        </p>
+        <p class="mb-2">
+          <strong>Comment:</strong>
+          <%= comment.body %>
+        </p>
 
- <p>
-  <% if allowed_to?(:destroy?, comment) %>
-    <%= link_to "Destroy Comment", [comment.article, comment], class: "my-custom-button", data: {
-                  turbo_method: :delete,
-                  turbo_confirm: "Are you sure?"
-                } %>
-  <% end %>
-</p>
+        <div class="d-flex">
+          <% if allowed_to?(:destroy?, comment) %>
+            <%= link_to "Destroy Comment", [comment.article, comment], class: "btn btn-danger btn-sm me-2", 
+                          data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+          <% end %>
 
-  <% if current_user == comment.user %>
-    <p>
-      <%= link_to "Edit Comment", article_comment_path(comment.article, comment), class: "my-custom-button" %>
-    </p>
-  <% end %>
+          <% if current_user == comment.user %>
+            <%= link_to "Edit Comment", edit_article_comment_path(comment.article, comment), 
+                          class: "btn btn-primary btn-sm" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

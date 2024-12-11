@@ -7,6 +7,11 @@ gem "bootstrap"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
+gem "image_processing"
+gem "interactor"
+gem "kaminari"
+gem "mini_magick"
+gem "pry"
 gem "rubocop", "~> 1.47.0"
 gem "rubocop-rails"
 gem "sassc-rails"
@@ -69,12 +74,11 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-
-  gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "capybara"
   gem "database_cleaner"
   gem "factory_bot_rails"
   gem "faker"
