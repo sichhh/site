@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    @article = Article.new
+    @article = current_user.articles.build
 
     authorize! @article
   end
@@ -21,12 +21,12 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = current_user.articles.build(article_params)
-    authorize! @article
+    create_article = Articles::Create.call(user: current_user, params: article_params)
 
-    if @article.save
-      redirect_to @article
+    if create_article.success?
+      redirect_to create_article.article, notice: "Статья успешно создана."
     else
+      @article = create_article.article
       render :new, status: :unprocessable_entity
     end
   end
@@ -34,9 +34,12 @@ class ArticlesController < ApplicationController
   def update
     authorize! @article
 
-    if @article.update(article_params)
-      redirect_to @article
+    update_article = Articles::Update.call(article: @article, article_params: article_params)
+
+    if update_article.success?
+      redirect_to update_article.article
     else
+      @article = update_article.article
       render :edit, status: :unprocessable_entity
     end
   end
@@ -44,9 +47,13 @@ class ArticlesController < ApplicationController
   def destroy
     authorize! @article
 
-    @article.destroy
+    destroy_article = Articles::Destroy.call(id: params[:id])
 
-    redirect_to root_path, status: :see_other
+    if destroy_article.success?
+      redirect_to root_path, status: :see_other
+    else
+      redirect_to root_path
+    end
   end
 
   private
