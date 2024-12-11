@@ -7,20 +7,25 @@ class CommentsController < ApplicationController
   def show; end
 
   def create
-    @comment = @article.comments.new(comment_params)
-    @comment.user = current_user
+    create_comment = Comments::Create.call(user: current_user, article: @article, params: comment_params)
 
-    return unless @comment.save
-
-    redirect_to @article
+    if create_comment.success?
+      redirect_to @article, notice: "Комментарий успешно создан."
+    else
+      @comment = create_comment.comment
+      render "articles/show", status: :unprocessable_entity
+    end
   end
 
   def update
     authorize! @comment
 
-    if @comment.update(comment_params)
-      redirect_to article_path(@article)
+    update_comment = Comments::Update.call(comment: @comment, comment_params: comment_params)
+
+    if update_comment.success?
+      redirect_to article_path(@article), notice: "Комментарий успешно обновлен."
     else
+      @comment = update_comment.comment
       render :edit, status: :unprocessable_entity
     end
   end
@@ -28,8 +33,13 @@ class CommentsController < ApplicationController
   def destroy
     authorize! @comment
 
-    @comment.destroy
-    redirect_to article_path(@article), status: :see_other
+    destroy_comment = Comments::Destroy.call(id: @comment[:id])
+
+    if destroy_comment.success?
+      redirect_to article_path(@article), status: :see_other, notice: "Комментарий удален."
+    else
+      redirect_to article_path(@article), alert: "Ошибка при удалении комментария."
+    end
   end
 
   private
