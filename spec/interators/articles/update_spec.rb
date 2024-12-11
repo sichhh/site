@@ -3,27 +3,25 @@ RSpec.describe Articles::Update, type: :interactor do
   let(:expected_params) { { title: article_params[:title], body: article_params[:body] } }
 
   describe ".call" do
-    context "when updating an existing article" do
-      let!(:article) { create :article, title: "Original Title", body: "Original Body" }
-      let(:article_params) { { title: "Updated Title", body: "Updated Body" } }
+    let!(:article) { create :article, title: "Original Title", body: "Original Body" }
+    let(:article_params) { { title: "Updated Title", body: "Updated Body" } }
 
-      it "succeeds and updates the article" do
-        call
-        expect(article.reload).to have_attributes(expected_params)
-        expect(call).to be_a_success
+    it "succeeds and updates the article" do
+      call
+      expect(article.reload).to have_attributes(expected_params)
+      expect(call).to be_a_success
+    end
+
+    context "with invalid parameters" do
+      let(:article_params) { { title: nil } }
+
+      it "fails" do
+        expect(call).to be_a_failure
       end
 
-      context "with invalid parameters" do
-        let(:article_params) { { title: nil } }
-
-        it "fails" do
-          expect(call).to be_a_failure
-        end
-
-        it "provides error messages" do
-          call
-          expect(call.errors).to eq(call.article.errors)
-        end
+      it "provides error messages" do
+        call
+        expect(call.errors).to eq(call.article.errors)
       end
     end
   end
