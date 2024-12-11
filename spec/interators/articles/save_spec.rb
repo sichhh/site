@@ -1,5 +1,6 @@
 RSpec.describe Articles::Save do
   subject(:call) { described_class.call(article: article, article_params: article_params) }
+  let(:expected_params) { { title: article_params[:title], body: article_params[:body]} }
 
   describe ".call" do
     context "when creating a new article" do
@@ -13,8 +14,7 @@ RSpec.describe Articles::Save do
 
       it "saves the article with correct attributes" do
         call
-        expect(Article.last.title).to eq(article_params[:title])
-        expect(Article.last.body).to eq(article_params[:body])
+        expect(article.reload).to have_attributes(expected_params)
       end
 
       context "with invalid parameters" do
@@ -38,8 +38,7 @@ RSpec.describe Articles::Save do
 
       it "succeeds and updates the article" do
         call
-        expect(article.reload.title).to eq("Updated Title")
-        expect(article.reload.body).to eq("Updated Body")
+        expect(article.reload).to have_attributes(expected_params)
         expect(call).to be_a_success
       end
 
