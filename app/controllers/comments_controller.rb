@@ -12,7 +12,6 @@ class CommentsController < ApplicationController
     if create_comment.success?
       redirect_to @article, notice: "Комментарий успешно создан."
     else
-      @comment = create_comment.comment
       render "articles/show", status: :unprocessable_entity
     end
   end
@@ -25,7 +24,6 @@ class CommentsController < ApplicationController
     if update_comment.success?
       redirect_to article_path(@article), notice: "Комментарий успешно обновлен."
     else
-      @comment = update_comment.comment
       render :edit, status: :unprocessable_entity
     end
   end

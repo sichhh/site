@@ -2,7 +2,7 @@ module Comments
   class Destroy
     include Interactor::Organizer
 
-    organize Comments::Destroy::FindRecord,
-             Comments::Destroy::DestroyRecord
+    organize Comments::FindRecord,
+             Comments::DestroyRecord
   end
 end
