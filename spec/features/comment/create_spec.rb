@@ -12,7 +12,7 @@ RSpec.feature "Creating a Comment", type: :feature do
     visit article_path(article)
 
     fill_in "comment[body]", with: "This is a comment."
-    click_on "Create Comment"
+    click_on "Save"
 
     expect(page).to have_content("This is a comment.")
   end

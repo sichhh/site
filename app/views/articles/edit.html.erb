@@ -1,15 +1,19 @@
-<h1><%= @article.title %></h1>
+<article class="card mt-4">
+  <div class="card-body">
+    <h1 class="card-title"><%= @article.title %></h1>
 
-<p><%= @article.body %></p>
+    <section class="card-text">
+      <p><%= @article.body %></p>
+    </section>
 
-<ul>
-  <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  } %></li>
-</ul>
+    <div class="mt-3">
+      <%= link_to "Destroy", article_path(@article), class: "btn btn-danger",
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+    </div>
+  </div>
+</article>
 
-<h1>Edit Article</h1>
-
-<%= render "form", article: @article %>
+<section class="mt-5">
+  <h1>Edit Article</h1>
+  <%= render "form", article: @article %>
+</section>
