@@ -14,11 +14,11 @@ RSpec.feature "Updating a Comment", type: :feature do
 
     click_on "Edit Comment"
 
-    click_on "Edit"
+    click_on "Save"
 
     fill_in "comment[body]", with: "Updated comment content."
 
-    click_on "Update Comment"
+    click_on "Save"
 
     expect(page).to have_content("Updated comment content.")
   end
