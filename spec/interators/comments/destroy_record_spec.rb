@@ -1,16 +1,16 @@
 RSpec.describe Comments::DestroyRecord do
-  subject(:context) { described_class.call(comment: comment) }
+  subject(:call) { described_class.call(comment: comment) }
 
   let!(:comment) { create(:comment) }
 
   describe ".call" do
     context "when the comment is successfully destroyed" do
       it "succeeds" do
-        expect(context).to be_a_success
+        expect(call).to be_a_success
       end
 
       it "removes the comment from the database" do
-        expect { context }.to change { Comment.exists?(comment.id) }.from(true).to(false)
+        expect { call }.to change { Comment.exists?(comment.id) }.from(true).to(false)
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Comments::DestroyRecord do
       end
 
       it "fails the context" do
-        expect(context).to be_a_failure
+        expect(call).to be_a_failure
       end
     end
   end
