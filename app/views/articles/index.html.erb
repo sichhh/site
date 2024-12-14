@@ -9,22 +9,22 @@
 <%= link_to "Сортировать по названию (по убыванию)", articles_path(field: 'title', sort_type: 'desc') %> 
 
 <div id="articles">
-  <ul>
-    <% @articles.each do |article| %>
-      <% unless article.archived? %>
-        <li>
-          <%= link_to article.title, article_path(article) %>
-            <% if user_signed_in? && current_user == article.user %>
-              <%= link_to 'Edit', edit_article_path(article) %>
-              <%= link_to "Destroy", article_path(article), data: { 
-              turbo_method: :delete,
-              turbo_confirm: "Are you sure?" 
-            } %> 
-          <% end %>
-        </li>
-      <% end %>
+  <% @articles.each do |article| %>
+    <% unless article.archived? %>
+      <div class="article-item">
+        <h2><%= link_to article.title, article_path(article) %></h2>
+        <p>Автор: <%= article.user.first_name %></p>
+        <p>Количество комментариев: <%= article.comments.count %></p>   
+        <% if user_signed_in? && current_user == article.user %>
+          <%= link_to 'Edit', edit_article_path(article) %>
+          <%= link_to "Destroy", article_path(article), data: { 
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?" 
+          } %> 
+        <% end %>
+      </div>
     <% end %>
-  </ul>
+  <% end %>
 
   <% if current_user %>
   <%= link_to 'New Article', new_article_path %>
@@ -34,4 +34,3 @@
 
   <%= paginate @articles %>
 </div>
-

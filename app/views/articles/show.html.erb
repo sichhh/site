@@ -32,9 +32,11 @@
 </ul>
 
 <h3>Comments</h3>
-<%= render @article.comments %>
+<%= render partial: 'comments/comment', collection: @comments, as: :comment %>
+<%= paginate @comments %>
 
 <% if user_signed_in? %>
 <h3>Add a comment:</h3>
 <%= render 'comments/form' %>
 <% end %> 
+
