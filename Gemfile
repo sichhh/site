@@ -3,6 +3,7 @@ source "https://rubygems.org"
 ruby "3.1.2"
 
 gem "action_policy"
+gem "active_model_serializers"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
