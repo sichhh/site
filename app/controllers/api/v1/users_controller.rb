@@ -6,7 +6,7 @@ module Api
       def show
         user = User.find(params[:id])
 
-        render json: UserSerializer.new(user).serializable_hash
+        render json: user
       rescue ActiveRecord::RecordNotFound
         render json: { error: "User not found" }, status: :not_found
       end
@@ -15,7 +15,7 @@ module Api
         user = User.new(user_params)
 
         if user.save
-          render json: UserSerializer.new(user).serializable_hash, status: :created
+          render json: user, status: :created
         else
           render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end
