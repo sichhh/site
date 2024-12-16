@@ -1,8 +1,6 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      skip_before_action :verify_authenticity_token
-
       def show
         user = User.find(params[:id])
 
@@ -23,7 +21,7 @@ module Api
 
       def upload_avatar
         user = User.find(params[:id])
-        
+
         if user.update(avatar: params[:avatar])
           render json: { message: "Avatar uploaded successfully" }, status: :ok
         else
