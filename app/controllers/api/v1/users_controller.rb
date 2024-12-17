@@ -3,10 +3,7 @@ module Api
     class UsersController < ApplicationController
       def show
         user = User.find(params[:id])
-
         render json: user
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: "User not found" }, status: :not_found
       end
 
       def create
@@ -27,8 +24,6 @@ module Api
         else
           render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: "User not found" }, status: :not_found
       end
 
       private
