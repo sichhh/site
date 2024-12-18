@@ -2,6 +2,17 @@ describe Api::V1::UsersController do
   let(:user) { create :user, first_name: "Test", last_name: "Test", age: 18 }
   let(:json) { JSON.parse(response.body) }
   let!(:articles) { create_list :article, 2, user: user }
+  let(:avatar_file) { fixture_file_upload("avatar.jpg", "image/jpg") }
+  let(:avatar_url) { "http://example.com/avatar.jpg" }
+
+  before do
+    stub_request(:get, avatar_url)
+      .to_return(
+        status: 200,
+        body: "fake avatar content",
+        headers: { "Content-Type" => "image/jpeg" }
+      )
+  end
 
   describe "GET #show" do
     context "when user exists" do
@@ -69,15 +80,25 @@ describe Api::V1::UsersController do
   end
 
   describe "PATCH #upload_avatar" do
-    let(:avatar_file) { fixture_file_upload("avatar.jpg") }
-
     context "when user exists" do
-      it "uploads avatar successfully" do
-        patch "/api/v1/users/#{user.id}/upload_avatar", params: { avatar: avatar_file }
+      context "with file upload" do
+        it "uploads avatar successfully from a file" do
+          patch "/api/v1/users/#{user.id}/upload_avatar", params: { avatar: avatar_file }
 
-        expect(response).to have_http_status(:ok)
-        expect(json["message"]).to eq("Avatar uploaded successfully")
-        expect(user.reload.avatar).to be_attached
+          expect(response).to have_http_status(:ok)
+          expect(json["message"]).to eq("Avatar uploaded successfully")
+          expect(user.reload.avatar).to be_attached
+        end
+      end
+
+      context "with URL upload" do
+        it "uploads avatar successfully from a URL" do
+          patch "/api/v1/users/#{user.id}/upload_avatar", params: { avatar_url: avatar_url }
+
+          expect(response).to have_http_status(:ok)
+          expect(json["message"]).to eq("Avatar uploaded successfully")
+          expect(user.reload.avatar).to be_attached
+        end
       end
     end
 

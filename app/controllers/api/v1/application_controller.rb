@@ -11,7 +11,7 @@ module Api
       end
 
       def handle_http_error(exception)
-        render json: { error: "Could not download avatar: #{exception.message}" }, status: :unprocessable_entity
+        render json: { error: "HTTP request failed: #{exception.message}" }, status: :unprocessable_entity
       end
     end
   end

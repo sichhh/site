@@ -18,7 +18,8 @@ module Api
 
       def upload_avatar
         user = User.find(params[:id])
-        result = AvatarLoadQuery.new(user, avatar_params).call
+        result = Avatars::Upload.call(user: user, avatar: avatar_params[:avatar],
+                                      avatar_url: avatar_params[:avatar_url])
 
         if result.success?
           render json: { message: "Avatar uploaded successfully" }, status: :ok

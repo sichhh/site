@@ -8,6 +8,7 @@ require "rspec/rails"
 require "action_policy/rspec"
 require "support/features"
 require "action_policy/rspec/dsl"
+require 'webmock/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
