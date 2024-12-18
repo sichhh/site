@@ -1,6 +1,6 @@
 <h1>Edit Profile</h1>
 
-<%= form_with model: @user, local: true do |form| %>
+<%= form_with model: @user, local: true, html: { multipart: true } do |form| %>
   <div class="profile-info">
     <div class="avatar">
       <% if @user.avatar.attached? %>
