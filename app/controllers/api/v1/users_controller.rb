@@ -18,11 +18,12 @@ module Api
 
       def upload_avatar
         user = User.find(params[:id])
+        result = AvatarLoadQuery.new(user, avatar_params).call
 
-        if user.update(avatar: params[:avatar])
+        if result.success?
           render json: { message: "Avatar uploaded successfully" }, status: :ok
         else
-          render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: result.errors }, status: :unprocessable_entity
         end
       end
 
@@ -30,6 +31,10 @@ module Api
 
       def user_params
         params.require(:user).permit(:first_name, :last_name, :age, :email, :password)
+      end
+
+      def avatar_params
+        params.permit(:avatar, :avatar_url)
       end
     end
   end

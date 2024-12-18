@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[show create index] do
         member do
-          post :upload_avatar
+          patch :upload_avatar
         end
       end
     end
