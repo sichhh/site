@@ -5,15 +5,6 @@ describe Api::V1::UsersController do
   let(:avatar_file) { fixture_file_upload("avatar.jpg", "image/jpg") }
   let(:avatar_url) { "http://example.com/avatar.jpg" }
 
-  before do
-    stub_request(:get, avatar_url)
-      .to_return(
-        status: 200,
-        body: "fake avatar content",
-        headers: { "Content-Type" => "image/jpeg" }
-      )
-  end
-
   describe "GET #show" do
     context "when user exists" do
       it "returns a successful response" do
@@ -92,6 +83,15 @@ describe Api::V1::UsersController do
       end
 
       context "with URL upload" do
+        before do
+          stub_request(:get, avatar_url)
+            .to_return(
+              status: 200,
+              body: "fake avatar content",
+              headers: { "Content-Type" => "image/jpeg" }
+            )
+        end
+
         it "uploads avatar successfully from a URL" do
           patch "/api/v1/users/#{user.id}/upload_avatar", params: { avatar_url: avatar_url }
 

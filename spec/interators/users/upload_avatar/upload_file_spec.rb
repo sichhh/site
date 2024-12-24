@@ -1,4 +1,4 @@
-RSpec.describe Avatars::Upload::UploadFile do
+RSpec.describe Users::UploadAvatar::UploadFile do
   subject(:call) { described_class.call(user: user, avatar: avatar) }
 
   let(:user) { create :user }

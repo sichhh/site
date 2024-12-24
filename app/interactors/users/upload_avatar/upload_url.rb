@@ -1,5 +1,5 @@
-module Avatars
-  class Upload
+module Users
+  class UploadAvatar
     class UploadUrl
       include Interactor
 

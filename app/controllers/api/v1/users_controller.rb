@@ -18,8 +18,8 @@ module Api
 
       def upload_avatar
         user = User.find(params[:id])
-        result = Avatars::Upload.call(user: user, avatar: avatar_params[:avatar],
-                                      avatar_url: avatar_params[:avatar_url])
+        result = Users::UploadAvatar.call(user: user, avatar: avatar_params[:avatar],
+                                          avatar_url: avatar_params[:avatar_url])
 
         if result.success?
           render json: { message: "Avatar uploaded successfully" }, status: :ok
@@ -35,7 +35,7 @@ module Api
       end
 
       def avatar_params
-        params.permit(:avatar, :avatar_url)
+        params.permit(:id, :avatar, :avatar_url)
       end
     end
   end

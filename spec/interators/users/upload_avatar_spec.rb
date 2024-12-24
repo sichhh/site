@@ -1,4 +1,4 @@
-RSpec.describe Avatars::Upload, type: :interactor do
+RSpec.describe Users::UploadAvatar, type: :interactor do
   let(:user) { create :user }
   let(:avatar_file) { fixture_file_upload("avatar.jpg", "image/jpg") }
   let(:avatar_url) { "https://example.com/avatar.jpg" }
@@ -17,7 +17,7 @@ RSpec.describe Avatars::Upload, type: :interactor do
       let(:call) { described_class.call(user: user, avatar: avatar_file, avatar_url: avatar_url) }
 
       it "organizes UploadFile and UploadUrl interactors" do
-        expect(described_class.organized).to eq([Avatars::Upload::UploadFile, Avatars::Upload::UploadUrl])
+        expect(described_class.organized).to eq([Users::UploadAvatar::UploadFile, Users::UploadAvatar::UploadUrl])
       end
 
       it "attaches the file avatar to the user" do

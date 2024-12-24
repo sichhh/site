@@ -4,6 +4,7 @@ ruby "3.1.2"
 
 gem "action_policy"
 gem "active_model_serializers"
+gem "active_storage_validations"
 gem "brakeman"
 gem "bundler-audit"
 gem "devise"
