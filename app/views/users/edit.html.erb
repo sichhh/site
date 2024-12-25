@@ -4,9 +4,8 @@
   <div class="profile-info">
     <div class="avatar">
       <% if @user.avatar.attached? %>
-        <%= image_tag @user.avatar.variant(resize_to_limit: [200, 200]) %>
-      <% else %>
-        <%= image_tag 'default_avatar.webp', size: '200x200' %> 
+        <%= image_tag @user.avatar.variant(resize_to_limit: [200, 200]), alt: "User Avatar", class: "user-avatar" %>
+
       <% end %>
     </div>
 

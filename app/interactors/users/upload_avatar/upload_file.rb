@@ -6,18 +6,7 @@ module Users
       delegate :user, :avatar, to: :context
 
       def call
-        attach_file
-        validate_avatar
-      end
-
-      private
-
-      def attach_file
-        user.avatar.attach(avatar)
-      end
-
-      def validate_avatar
-        return if user.errors[:avatar].blank?
+        return if user.avatar.attach(avatar)
 
         context.fail!(errors: user.errors.full_messages)
       end
