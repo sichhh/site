@@ -6,15 +6,16 @@ module Users
       delegate :user, :avatar_url, to: :context
 
       def call
-        attach_from_url if avatar_url
+        return if avatar_url.blank?
+
+        file = open_file(avatar_url)
+
+        return if user.avatar.attach(io: file, filename: File.basename(URI.parse(avatar_url).path))
+
+        context.fail!(errors: user.errors.full_messages)
       end
 
       private
-
-      def attach_from_url
-        file = open_file(avatar_url)
-        user.avatar.attach(io: file, filename: File.basename(URI.parse(avatar_url).path))
-      end
 
       def open_file(url)
         URI.parse(url).open
