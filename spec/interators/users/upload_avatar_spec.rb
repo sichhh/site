@@ -1,6 +1,6 @@
 RSpec.describe Users::UploadAvatar, type: :interactor do
   let(:user) { create :user }
-  let(:avatar_file) { fixture_file_upload("avatar.jpg", "image/jpg") }
+  let(:avatar_file) { fixture_file_upload("avatar.png", "image/png") }
   let(:avatar_url) { "https://example.com/avatar.jpg" }
 
   describe ".call" do

@@ -35,7 +35,7 @@ module Api
       end
 
       def avatar_params
-        params.permit(:id, :avatar, :avatar_url)
+        params.permit(:avatar, :avatar_url)
       end
     end
   end

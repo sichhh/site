@@ -2,8 +2,8 @@ RSpec.describe Users::UploadAvatar::UploadFile do
   subject(:call) { described_class.call(user: user, avatar: avatar) }
 
   let(:user) { create :user }
-  let(:valid_avatar) { fixture_file_upload("avatar.jpg", "image/jpg") }
-  let(:invalid_avatar) { fixture_file_upload("avatar.pdf") }
+  let(:valid_avatar) { fixture_file_upload("avatar.png", "image/png") }
+  let(:invalid_avatar) { fixture_file_upload("example.pptx") }
 
   describe ".call" do
     context "when a valid avatar is provided" do
@@ -23,7 +23,7 @@ RSpec.describe Users::UploadAvatar::UploadFile do
       it "fails with an error message" do
         result = call
         expect(result).to be_a_failure
-        expect(result.errors).to eq("Avatar must be a JPEG or PNG or JPG")
+        expect(result.errors).to eq(["Avatar has an invalid content type"])
       end
     end
 

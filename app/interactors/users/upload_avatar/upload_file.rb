@@ -6,6 +6,8 @@ module Users
       delegate :user, :avatar, to: :context
 
       def call
+        return if avatar.blank?
+
         return if user.avatar.attach(avatar)
 
         context.fail!(errors: user.errors.full_messages)

@@ -2,7 +2,7 @@ describe Api::V1::UsersController do
   let(:user) { create :user, first_name: "Test", last_name: "Test", age: 18 }
   let(:json) { JSON.parse(response.body) }
   let!(:articles) { create_list :article, 2, user: user }
-  let(:avatar_file) { fixture_file_upload("avatar.jpg", "image/jpg") }
+  let(:avatar_file) { fixture_file_upload("avatar.png", "image/png") }
   let(:avatar_url) { "http://example.com/avatar.jpg" }
 
   describe "GET #show" do
