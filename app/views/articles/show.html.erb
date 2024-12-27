@@ -7,9 +7,7 @@
   </div>
   <div class="author-avatar">
   <% if @article.user.avatar.attached? %>
-    <%= image_tag @article.user.avatar_thumbnail, class: 'avatar' %>
-  <% else %>
-    <%= image_tag 'default_avatar.webp', size: '200x200', class: 'avatar' %> 
+    <%= image_tag @article.user.avatar_thumbnail, class: 'avatar' %> 
   <% end %>
 </div> 
 </div>
