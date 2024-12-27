@@ -35,8 +35,7 @@ RSpec.describe Users::UploadAvatar::UploadFile do
       end
 
       it "succeeds without errors" do
-        result = call
-        expect(result).to be_a_success
+        expect(call).to be_a_success
       end
     end
   end
