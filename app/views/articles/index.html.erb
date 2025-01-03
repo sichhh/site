@@ -30,6 +30,10 @@
   <%= link_to 'New Article', new_article_path %>
   <%= link_to 'Edit Profile', edit_user_path(current_user) %>
   <%= link_to 'Search User', users_path %>
+  <%= link_to 'Входящие запросы', incoming_requests_friendships_path %>
+  <%= link_to 'Отправленные запросы', sent_requests_friendships_path %>
+  <%= link_to 'Мои друзья', friends_users_path %>
+
   <% end %>
 
   <%= paginate @articles %>

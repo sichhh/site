@@ -16,6 +16,11 @@ class UsersController < ApplicationController
     @users = UsersSearchQuery.new(params[:query], params[:page], params[:per_page]).call
   end
 
+  def friends
+    @friends = current_user.friendships.where(status: "friends").map(&:friend) +
+               current_user.inverse_friendships.where(status: "friends").map(&:user)
+  end
+
   private
 
   def set_user

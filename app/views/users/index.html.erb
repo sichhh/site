@@ -7,19 +7,49 @@
     <%= form.submit "Найти" %>
   <% end %>
 
-  <% if @users.present? %> 
+  <% if @users.present? %>
     <h2>Результаты поиска</h2>
     <ul>
       <% @users.each do |user| %>
         <li>
-          <%= image_tag (user.avatar if user.avatar.attached?), size: '100x100' %> 
+          <% if user.avatar.attached? %>
+            <%= image_tag(user.avatar, size: '100x100') %>
+          <% end %>
           <%= user.first_name %> <%= user.last_name %> (<%= user.email %>)
+
+          <% unless current_user == user %>
+            <% friendship = current_user.friendships.find_by(friend: user) || current_user.inverse_friendships.find_by(user: user) %>
+            <% inverse_friendship = user.friendships.find_by(friend: current_user) %>
+
+            <% if friendship.nil? && inverse_friendship.nil? %>
+              <%= button_to 'Добавить в друзья', friendships_path(friend_id: user.id), method: :post %>
+            <% else %>
+              <% case friendship&.status || inverse_friendship&.status %>
+              <% when "pending" %>
+                <% if friendship&.user == current_user %>
+                  <p>Заявка в друзья отправлена</p>
+                  <%= button_to 'Отменить заявку', friendship_path(friendship), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите отменить заявку?" } %>
+                <% else %>
+                  <%= button_to 'Принять заявку', friendship_path(friendship || inverse_friendship), method: :patch %>
+                  <%= button_to 'Отклонить заявку', friendship_path(friendship || inverse_friendship), method: :delete %>
+                <% end %>
+              <% when "rejected" %>
+                <%= button_to 'Добавить в друзья', friendships_path(friend_id: user.id), method: :post %>
+              <% when "friends" %>
+                <p>Вы друзья</p>
+                <%= button_to 'Удалить из друзей', friendship_path(friendship || inverse_friendship), method: :delete %>
+              <% when "subscribed" %>
+                <p>Вы удалили друга, но запрос в друзья отправлен</p>
+                <%= button_to 'Отменить запрос', friendship_path(friendship), method: :delete %>
+              <% end %>
+            <% end %>
+          <% end %>
         </li>
       <% end %>
     </ul>
-  <% elsif params[:query].present? %> 
-    <p>Пользователи не найдены.</p>
-  <% end %> 
 
-  <%= paginate @users %>
+    <%= paginate @users %>
+  <% elsif params[:query].present? %>
+    <p>Пользователи не найдены.</p>
+  <% end %>
 <% end %>
