@@ -15,7 +15,7 @@ class FriendshipsController < ApplicationController
     result = Friendships::Update.call(id: params[:id])
 
     if result.success?
-      redirect_to users_path, notice: "Запрос в друзья принят."
+      redirect_to friends_users_path, notice: "Запрос в друзья принят."
     else
       redirect_to users_path, alert: result.errors.full_messages.join(", ")
     end
@@ -25,10 +25,10 @@ class FriendshipsController < ApplicationController
     result = Friendships::Destroy.call(id: params[:id])
 
     if result.success?
-      redirect_to users_path, notice: result.notice
+      redirect_to friendship_path, notice: result.notice
     else
-      edirect_to users_path, alert: result.errors.full_messages.join(", ")
-      redirect_to users_path, alert: error_messages
+      edirect_to friendship_path, alert: result.errors.full_messages.join(", ")
+      redirect_to friendship_path, alert: error_messages
     end
   end
 
