@@ -1,19 +1,26 @@
-<h1> Поиск пользователей </h1>
+<h1 class="mb-4">Поиск пользователей</h1>
 
 <% if user_signed_in? %>
-  <%= form_with url: users_path, method: :get, local: true do |form| %>
-    <%= form.label :query, "Введите данные:" %>
-    <%= form.text_field :query %>
-    <%= form.submit "Найти" %>
+  <%= form_with url: users_path, method: :get, local: true, html: { class: 'search-form' } do |form| %>
+    <div class="mb-3">
+      <%= form.label :query, "Введите данные:", class: 'form-label' %>
+      <%= form.text_field :query, class: 'form-control' %>
+    </div>
+    <div>
+      <%= form.submit "Найти", class: 'btn btn-primary' %>
+    </div>
   <% end %>
 
   <% if @users.present? %> 
-    <h2>Результаты поиска</h2>
-    <ul>
+    <h2 class="mt-4">Результаты поиска</h2>
+    <ul class="list-group">
       <% @users.each do |user| %>
-        <li>
-          <%= image_tag (user.avatar.attached? ? user.avatar : 'default_avatar.webp'), size: '100x100' %> 
-          <%= user.first_name %> <%= user.last_name %> (<%= user.email %>)
+        <li class="list-group-item d-flex align-items-center mb-3">
+          <%= image_tag (user.avatar.attached? ? user.avatar.variant(resize_to_limit: [100, 100]) : 'default_avatar.webp'), class: 'avatar me-3' %> 
+          <div>
+            <strong><%= user.first_name %> <%= user.last_name %></strong><br>
+            <small><%= user.email %></small>
+          </div>
         </li>
       <% end %>
     </ul>
@@ -21,5 +28,7 @@
     <p>Пользователи не найдены.</p>
   <% end %> 
 
-  <%= paginate @users %>
+  <div class="pagination mt-4">
+    <%= paginate @users, class: 'pagination justify-content-center' %>
+  </div>
 <% end %>
