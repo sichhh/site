@@ -27,8 +27,8 @@
               <% case friendship&.status || inverse_friendship&.status %>
               <% when "pending" %>
                 <% if friendship&.user == current_user %>
-                  <p>Заявка в друзья отправлена</p>
-                  <%= button_to 'Отменить заявку', friendship_path(friendship), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите отменить заявку?" } %>
+                  <p>Запрос в друзья отправлен</p>
+                  <%= button_to 'Отменить запрос', friendship_path(friendship), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите отменить запрос?" } %>
                 <% else %>
                   <%= button_to 'Принять заявку', friendship_path(friendship || inverse_friendship), method: :patch %>
                   <%= button_to 'Отклонить заявку', friendship_path(friendship || inverse_friendship), method: :delete %>
