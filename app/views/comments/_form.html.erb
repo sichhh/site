@@ -2,7 +2,11 @@
   
   <p>
     <%= form.label :body %><br>
-    <%= form.text_area :body %>
+    <%= form.text_area :body %><br>
+    <% @comment.errors.full_messages_for(:body).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
   </p>
 <p>
   <%= form.label :status %><br>

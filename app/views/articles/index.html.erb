@@ -24,6 +24,8 @@
             <time datetime="<%= article.created_at.iso8601 %>">
               <small><%= article.created_at.strftime('%B %d, %Y') %></small>
             </time>
+            <p>Автор: <%= article.user.first_name %></p>
+            <p>Количество комментариев: <%= article.comments.count %></p>
           </section>
 
           <% if user_signed_in? && current_user == article.user %>

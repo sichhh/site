@@ -8,13 +8,13 @@
 
     <div class="article-info d-flex align-items-center mt-4">
       <div class="author-details me-3">
-        <p>Автор: <%= @article.user.first_name %></p> 
+        <p>Автор: <%= @article.user.first_name %></p>
       </div>
       <div class="author-avatar">
         <% if @article.user.avatar.attached? %>
-          <%= image_tag @article.user.avatar_thumbnail, class: 'avatar rounded-circle', size: '100x100' %>
+          <%= image_tag @article.user.avatar_thumbnail, class: 'avatar', size: '100x100' %>
         <% else %>
-          <%= image_tag 'default_avatar.webp', class: 'avatar rounded-circle', size: '100x100' %> 
+          <%= image_tag 'default_avatar.webp', class: 'avatar', size: '100x100' %>
         <% end %>
       </div>
     </div>
@@ -42,3 +42,19 @@
     </div>
   <% end %>
 </section>
+
+<% if allowed_to?(:edit?, @article) || allowed_to?(:destroy?, @article) %>
+  <ul>
+    <% if allowed_to?(:edit?, @article) %>
+      <li><%= link_to "Edit", edit_article_path(@article) %></li>
+    <% end %>
+    <% if allowed_to?(:destroy?, @article) %>
+      <li><%= link_to "Destroy", article_path(@article), data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Are you sure?"
+                      } %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= paginate @comments %>

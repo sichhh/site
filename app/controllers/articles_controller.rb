@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.find(params[:id])
     @comment = @article.comments.build
+    @comments = CommentsQuery.new(@article.comments, params).call
   end
 
   def new
