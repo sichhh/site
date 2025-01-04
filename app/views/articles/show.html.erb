@@ -41,20 +41,4 @@
       <%= render 'comments/form' %>
     </div>
   <% end %>
-</section>
-
-<% if allowed_to?(:edit?, @article) || allowed_to?(:destroy?, @article) %>
-  <ul>
-    <% if allowed_to?(:edit?, @article) %>
-      <li><%= link_to "Edit", edit_article_path(@article) %></li>
-    <% end %>
-    <% if allowed_to?(:destroy?, @article) %>
-      <li><%= link_to "Destroy", article_path(@article), data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Are you sure?"
-                      } %></li>
-    <% end %>
-  </ul>
-<% end %>
-
 <%= paginate @comments %>
