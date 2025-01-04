@@ -27,8 +27,7 @@ class FriendshipsController < ApplicationController
     if result.success?
       redirect_to friendship_path, notice: result.notice
     else
-      edirect_to friendship_path, alert: result.errors.full_messages.join(", ")
-      redirect_to friendship_path, alert: error_messages
+      redirect_to friendship_path, alert: result.errors.full_messages.join(", ")
     end
   end
 
