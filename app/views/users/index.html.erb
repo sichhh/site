@@ -38,9 +38,6 @@
               <% when "friends" %>
                 <p>Вы друзья</p>
                 <%= button_to 'Удалить из друзей', friendship_path(friendship || inverse_friendship), method: :delete %>
-              <% when "subscribed" %>
-                <p>Вы удалили друга, но запрос в друзья отправлен</p>
-                <%= button_to 'Отменить запрос', friendship_path(friendship), method: :delete %>
               <% end %>
             <% end %>
           <% end %>
