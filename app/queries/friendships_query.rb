@@ -15,5 +15,3 @@ class FriendshipsQuery
 
   attr_reader :user, :status
 end
-
-
