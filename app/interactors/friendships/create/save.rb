@@ -8,6 +8,8 @@ module Friendships
       def call
         existing_friendship = find_existing_friendship
 
+        return create_new_friendship if existing_friendship.blank?
+
         if rejected_friendship?(existing_friendship)
           reactivate_friendship(existing_friendship)
         elsif existing_friendship.nil?

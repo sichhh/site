@@ -9,11 +9,11 @@ module Friendships
         if friendship.pending?
           cancel_request
           context.notice = "Запрос в друзья отменён."
-        elsif friendship.status == "friends"
+        elsif friendship.friends?
           remove_friendship
           context.notice = "Вы удалили пользователя из друзей."
         else
-          context.fail!(errors: { base: ["Невозможно выполнить операцию для текущего статуса: #{friendship.status}"] })
+          context.fail!(errors: { base: friendship.errors.full_messages })
         end
       end
 

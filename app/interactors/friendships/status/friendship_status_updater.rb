@@ -9,7 +9,7 @@ module Friendships
         if friendship.pending?
           friendship.update(status: "friends")
         else
-          context.fail!(errors: { base: ["Cannot update friendship status"] })
+          context.fail!(errors: { base: friendship.errors.full_messages })
         end
       end
     end
