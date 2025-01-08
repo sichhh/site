@@ -6,7 +6,10 @@ module Friendships
 
     def call
       context.friendship = Friendship.find_by(id: id)
-      context.fail!(errors: { base: ["Friendship not found"] }) unless context.friendship
+
+      return if context.friendship
+
+      context.fail!(errors: { base: ["Friendship not found"] })
     end
   end
 end

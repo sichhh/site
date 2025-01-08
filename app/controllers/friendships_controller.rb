@@ -2,8 +2,8 @@ class FriendshipsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @incoming_requests = current_user.inverse_friendships.where(status: "pending")
-    @sent_requests = current_user.friendships.where(status: "pending")
+    @incoming_requests = current_user.inverse_friendships.pending
+    @sent_requests = current_user.friendships.pending
   end
 
   def create

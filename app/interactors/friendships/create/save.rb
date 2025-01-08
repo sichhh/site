@@ -6,14 +6,10 @@ module Friendships
       delegate :current_user, :friend, to: :context
 
       def call
-        existing_friendship = find_existing_friendship
-
         return create_new_friendship if existing_friendship.blank?
 
-        if rejected_friendship?(existing_friendship)
-          reactivate_friendship(existing_friendship)
-        elsif existing_friendship.nil?
-          create_new_friendship
+        if rejected_friendship?
+          reactivate_friendship
         else
           fail_friendship_exists
         end
@@ -21,18 +17,18 @@ module Friendships
 
       private
 
-      def find_existing_friendship
-        current_user.friendships.find_by(friend: friend)
+      def existing_friendship
+        @existing_friendship ||= current_user.friendships.find_by(friend: friend)
       end
 
-      def rejected_friendship?(friendship)
-        friendship&.rejected?
+      def rejected_friendship?
+        existing_friendship&.rejected?
       end
 
-      def reactivate_friendship(friendship)
-        return if friendship.update(status: "pending")
+      def reactivate_friendship
+        return if existing_friendship.update(status: "pending")
 
-        context.fail!(errors: friendship.errors)
+        context.fail!(errors: existing_friendship.errors)
       end
 
       def create_new_friendship

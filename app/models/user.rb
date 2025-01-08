@@ -11,7 +11,7 @@ class User < ApplicationRecord
            inverse_of: :friend
 
   has_many :friend_friendships,
-           -> { friends },
+           -> { accepted },
            class_name: "Friendship",
            foreign_key: "user_id",
            dependent: :destroy,
@@ -20,7 +20,7 @@ class User < ApplicationRecord
   has_many :friends, through: :friend_friendships, source: :friend
 
   has_many :inverse_friend_friendships,
-           -> { friends },
+           -> { accepted },
            class_name: "Friendship",
            foreign_key: "friend_id",
            dependent: :destroy,

@@ -7,7 +7,10 @@ module Friendships
 
       def call
         context.friend = User.find_by(id: friend_id)
-        context.fail!(errors: { base: ["Friend not found"] }) if context.friend.nil?
+
+        return if context.friend
+
+        context.fail!(errors: { base: ["Friend not found"] })
       end
     end
   end

@@ -6,11 +6,9 @@ module Friendships
       delegate :friendship, to: :context
 
       def call
-        if friendship.pending?
-          friendship.update(status: "friends")
-        else
-          context.fail!(errors: { base: friendship.errors.full_messages })
-        end
+        return unless friendship.pending?
+
+        friendship.update(status: "accepted")
       end
     end
   end
