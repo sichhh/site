@@ -2,7 +2,8 @@ class UsersSearchQuery
   DEFAULT_PAGE = 1
   DEFAULT_PER_PAGE = 2
 
-  def initialize(query, page, per_page)
+  def initialize(query, page, per_page, relation)
+    @relation = relation
     @query = query
     @page = page || DEFAULT_PAGE
     @per_page = per_page || DEFAULT_PER_PAGE
@@ -15,14 +16,14 @@ class UsersSearchQuery
 
   private
 
-  attr_reader :query, :page, :per_page
+  attr_reader :query, :page, :per_page, :relation
 
   def search_users(query)
     if query.blank?
-      User.all
+      relation
     else
-      User.where("first_name ILIKE :query OR last_name ILIKE :query OR email ILIKE :query",
-                 query: "%#{@query}%")
+      relation.where("first_name ILIKE :query OR last_name ILIKE :query OR email ILIKE :query",
+                     query: "%#{@query}%")
     end
   end
 end

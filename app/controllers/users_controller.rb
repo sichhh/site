@@ -13,10 +13,23 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = UsersSearchQuery.new(params[:query], params[:page], params[:per_page]).call
+    @users = UsersSearchQuery.new(
+      params[:query],
+      params[:page],
+      params[:per_page],
+      user_relation
+    ).call
   end
 
   private
+
+  def user_relation
+    if params[:friends].present?
+      User.where(id: current_user.friend_ids + current_user.inverse_friend_ids)
+    else
+      User.all
+    end
+  end
 
   def set_user
     @user = current_user

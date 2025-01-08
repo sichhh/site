@@ -1,0 +1,18 @@
+<h1>Мои друзья</h1>
+
+<% if @friends.any? %>
+  <ul>
+    <% @friends.each do |friend| %>
+      <li>
+        <% if friend.avatar.attached? %>
+          <%= image_tag(friend.avatar, size: '100x100') %>
+        <% end %>
+        <%= friend.first_name %> <%= friend.last_name %> (<%= friend.email %>)
+
+        <%= button_to 'Удалить из друзей', friendship_path(current_user.friendships.find_by(friend: friend) || current_user.inverse_friendships.find_by(user: friend)), method: :delete, data: { confirm: "Вы уверены, что хотите удалить этого друга?" } %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>У вас пока нет друзей.</p>
+<% end %>
