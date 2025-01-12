@@ -1,9 +1,12 @@
 class FriendshipsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_friendship, only: %i[update destroy]
 
   def index
     @incoming_requests = current_user.inverse_friendships.pending
     @sent_requests = current_user.friendships.pending
+
+    authorize! Friendship
   end
 
   def create
@@ -17,7 +20,9 @@ class FriendshipsController < ApplicationController
   end
 
   def update
-    result = Friendships::Update.call(id: params[:id])
+    authorize! @friendship
+
+    result = Friendships::Update.call(id: @friendship.id)
 
     if result.success?
       redirect_to users_path(friends: true), notice: "Запрос в друзья принят."
@@ -27,12 +32,20 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    result = Friendships::Destroy.call(id: params[:id])
+    authorize! @friendship
+
+    result = Friendships::Destroy.call(id: @friendship.id)
 
     if result.success?
       redirect_to friendship_path, notice: result.notice
     else
       redirect_to friendship_path, alert: result.errors.full_messages.join(", ")
     end
+  end
+
+  private
+
+  def set_friendship
+    @friendship = Friendship.find(params[:id])
   end
 end
