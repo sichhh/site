@@ -1,5 +1,6 @@
 RSpec.describe UsersSearchQuery do
-  let(:query) { described_class.new(search_query, page, per_page) }
+  let(:relation) { User.all }
+  let(:query) { described_class.new(search_query, page, per_page, relation) }
   let(:result) { query.call }
   let(:search_query) { "test" }
   let(:page) { 1 }
