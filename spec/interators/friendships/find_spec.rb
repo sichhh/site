@@ -1,14 +1,13 @@
 RSpec.describe Friendships::Find, type: :interactor do
   let(:friendship) { create :friendship }
-  let(:context) { Interactor::Context.new(id: friendship.id) }
+  let(:context) { { id: friendship.id } }
 
   describe ".call" do
     let(:call) { described_class.call(context) }
 
     context "when the friendship exists" do
       it "sets the friendship in the context" do
-        call
-        expect(context.friendship).to eq(friendship)
+        expect(call[:friendship]).to eq(friendship)
       end
 
       it "does not fail" do

@@ -18,19 +18,13 @@ module Friendships
       private
 
       def cancel_request
-        if friendship.destroy
-          context.success!
-        else
-          context.fail!(errors: friendship.errors.full_messages)
-        end
+        friendship.destroy
+        context.success!
       end
 
       def remove_friendship
-        inverse_friendship = Friendship.find_by(user_id: friendship.friend_id, friend_id: friendship.user_id)
-
         ActiveRecord::Base.transaction do
           friendship.destroy!
-          inverse_friendship&.destroy!
           context.success!
         end
       rescue ActiveRecord::RecordInvalid => e

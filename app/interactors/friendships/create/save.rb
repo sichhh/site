@@ -8,11 +8,7 @@ module Friendships
       def call
         return create_new_friendship if existing_friendship.blank?
 
-        if rejected_friendship?
-          reactivate_friendship
-        else
-          fail_friendship_exists
-        end
+        reactivate_friendship if rejected_friendship?
       end
 
       private
@@ -34,10 +30,6 @@ module Friendships
       def create_new_friendship
         friendship = current_user.friendships.build(friend: friend, status: "pending")
         context.fail!(errors: friendship.errors) unless friendship.save
-      end
-
-      def fail_friendship_exists
-        context.fail!(errors: { base: ["Friendship already exists"] })
       end
     end
   end

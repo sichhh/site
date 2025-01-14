@@ -23,15 +23,5 @@ RSpec.describe Friendships::Create::Save do
         expect(existing_friendship.reload.status).to eq("pending")
       end
     end
-
-    context "when an active friendship already exists" do
-      let!(:existing_friendship) { create :friendship, user: current_user, friend: friend, status: "accepted" }
-
-      it "fails with a friendship already exists error" do
-        expect { call }.not_to change { current_user.friendships.count }
-        expect(call).to be_failure
-        expect(call.errors).to eq({ base: ["Friendship already exists"] })
-      end
-    end
   end
 end
