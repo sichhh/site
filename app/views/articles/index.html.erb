@@ -45,6 +45,8 @@
   <div class="mt-4">
     <%= link_to 'Edit Profile', edit_user_path(current_user), class: 'btn btn-outline-primary btn-sm' %>
     <%= link_to 'Search User', users_path, class: 'btn btn-outline-primary btn-sm' %>
+    <%= link_to 'Мои Друзья', users_path(friends: true), class: 'btn btn-outline-primary btn-sm' %>
+    <%= link_to 'Входящие и отправленные запросы', friendships_path,class: 'btn btn-outline-primary btn-sm' %>
   </div>
 <% end %>
 
