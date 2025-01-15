@@ -15,7 +15,7 @@ RSpec.feature "Updating an Article", type: :feature do
 
     fill_in "article[body]", with: "Updated article content."
 
-    click_on "Update Article"
+    click_on "Save"
 
     expect(page).to have_content("Updated article content.")
   end

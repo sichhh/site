@@ -1,40 +1,52 @@
-<h1>Входящие запросы на дружбу</h1>
+<h1 class="mb-4">Входящие запросы на дружбу</h1>
 
 <% if @incoming_requests.present? %>
-  <ul>
+  <ul class="list-group">
     <% @incoming_requests.each do |request| %>
-      <li>
+      <li class="list-group-item d-flex align-items-center mb-3">
         <% user = request.user %>
         <% if user.avatar.attached? %>
-          <%= image_tag(user.avatar, size: '100x100') %>
+          <%= image_tag(user.avatar.variant(resize_to_limit: [100, 100]), class: 'avatar me-3 rounded-circle') %>
+        <% else %>
+          <%= image_tag('default_avatar.webp', class: 'avatar me-3 rounded-circle') %>
         <% end %>
-        <%= user.first_name %> <%= user.last_name %> (<%= user.email %>)
-
-        <%= button_to 'Принять', friendship_path(request), method: :patch %>
-        <%= button_to 'Отклонить', friendship_path(request), method: :delete %>
+        <div>
+          <strong><%= user.first_name %> <%= user.last_name %></strong><br>
+          <small><%= user.email %></small>
+        </div>
+        <div class="ms-auto">
+          <%= button_to 'Принять', friendship_path(request), method: :patch, class: 'btn btn-primary me-2' %>
+          <%= button_to 'Отклонить', friendship_path(request), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите отклонить запрос?" }, class: 'btn btn-danger' %>
+        </div>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p>Нет входящих запросов на дружбу.</p>
+  <p class="text-muted">Нет входящих запросов на дружбу.</p>
 <% end %>
 
-<h1>Отправленные запросы на дружбу</h1>
+<h1 class="mb-4">Отправленные запросы на дружбу</h1>
 
 <% if @sent_requests.present? %>
-  <ul>
+  <ul class="list-group">
     <% @sent_requests.each do |request| %>
-      <li>
+      <li class="list-group-item d-flex align-items-center mb-3">
         <% friend = request.friend %>
         <% if friend.avatar.attached? %>
-          <%= image_tag(friend.avatar, size: '100x100') %>
+          <%= image_tag(friend.avatar.variant(resize_to_limit: [100, 100]), class: 'avatar me-3 rounded-circle') %>
+        <% else %>
+          <%= image_tag('default_avatar.webp', class: 'avatar me-3 rounded-circle') %>
         <% end %>
-        <%= friend.first_name %> <%= friend.last_name %> (<%= friend.email %>)
-
-        <%= button_to 'Отменить запрос', friendship_path(request), method: :delete %>
+        <div>
+          <strong><%= friend.first_name %> <%= friend.last_name %></strong><br>
+          <small><%= friend.email %></small>
+        </div>
+        <div class="ms-auto">
+          <%= button_to 'Отменить запрос', friendship_path(request), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите отменить запрос?" }, class: 'btn btn-warning' %>
+        </div>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p>Нет отправленных запросов на дружбу.</p>
+  <p class="text-muted">Нет отправленных запросов на дружбу.</p>
 <% end %>

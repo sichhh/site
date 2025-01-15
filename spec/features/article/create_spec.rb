@@ -14,7 +14,7 @@ RSpec.feature "Creating an Article", type: :feature do
     fill_in "article[body]", with: "Content of the new article."
     select "public", from: "article[status]"
 
-    click_on "Create Article"
+    click_on "Save"
     expect(page).to have_content("New Article")
   end
 end
