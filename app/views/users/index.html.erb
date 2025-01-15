@@ -1,63 +1,74 @@
 <% if user_signed_in? %>
   <% unless params[:friends] == "true" %>
-    <h1>Поиск пользователей</h1>
-    <%= form_with url: users_path, method: :get, local: true do |form| %>
-      <%= form.label :query, "Введите данные:" %>
-      <%= form.text_field :query %>
-      <%= form.submit "Найти" %>
+    <h1 class="mb-4">Поиск пользователей</h1>
+    <%= form_with url: users_path, method: :get, local: true, html: { class: 'search-form' } do |form| %>
+      <div class="mb-3">
+        <%= form.label :query, "Введите данные:", class: 'form-label' %>
+        <%= form.text_field :query, class: 'form-control' %>
+      </div>
+      <div>
+        <%= form.submit "Найти", class: 'btn btn-primary' %>
+      </div>
     <% end %>
 
     <% if @users.present? %>
-      <h2>Результаты поиска</h2>
-      <ul>
+      <h2 class="mt-4">Результаты поиска</h2>
+      <ul class="list-group">
         <% @users.each do |user| %>
-          <li>
-            <% if user.avatar.attached? %>
-              <%= image_tag(user.avatar, size: '100x100') %>
-            <% end %>
-            <%= user.first_name %> <%= user.last_name %> (<%= user.email %>)
-
+          <li class="list-group-item d-flex align-items-center mb-3">
+            <%= image_tag((user.avatar.attached? ? user.avatar.variant(resize_to_limit: [100, 100]) : 'default_avatar.webp'), class: 'avatar me-3 rounded-circle') %>
+            <div>
+              <strong><%= user.first_name %> <%= user.last_name %></strong><br>
+              <small><%= user.email %></small>
+            </div>
             <% unless current_user == user %>
               <% friendship = current_user.friendships.find_by(friend: user) || current_user.inverse_friendships.find_by(user: user) %>
               <% inverse_friendship = user.friendships.find_by(friend: current_user) %>
-
-              <% if friendship.nil? && inverse_friendship.nil? %>
-                <%= button_to 'Добавить в друзья', friendships_path(friend_id: user.id), method: :post %>
-              <% else %>
-                <% case friendship&.status || inverse_friendship&.status %>
-                <% when "pending" %>
-                  <% if friendship&.user == current_user %>
-                    <p>Запрос в друзья отправлен</p>
-                    <%= button_to 'Отменить запрос', friendship_path(friendship), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите отменить запрос?" } %>
-                  <% else %>
-                    <%= button_to 'Принять заявку', friendship_path(friendship || inverse_friendship), method: :patch %>
-                    <%= button_to 'Отклонить заявку', friendship_path(friendship || inverse_friendship), method: :delete %>
+              <div class="ms-auto">
+                <% if friendship.nil? && inverse_friendship.nil? %>
+                  <%= button_to 'Добавить в друзья', friendships_path(friend_id: user.id), method: :post, class: 'btn btn-success' %>
+                <% else %>
+                  <% case friendship&.status || inverse_friendship&.status %>
+                  <% when "pending" %>
+                    <% if friendship&.user == current_user %>
+                      <span class="text-warning me-2">Запрос отправлен</span>
+                      <%= button_to 'Отменить запрос', friendship_path(friendship), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите отменить запрос?" }, class: 'btn btn-warning' %>
+                    <% else %>
+                      <%= button_to 'Принять заявку', friendship_path(friendship || inverse_friendship), method: :patch, class: 'btn btn-primary me-2' %>
+                      <%= button_to 'Отклонить заявку', friendship_path(friendship || inverse_friendship), method: :delete, class: 'btn btn-danger' %>
+                    <% end %>
+                  <% when "rejected" %>
+                    <%= button_to 'Добавить в друзья', friendships_path(friend_id: user.id), method: :post, class: 'btn btn-success' %>
+                  <% when "accepted" %>
+                    <span class="text-success me-2">Вы друзья</span>
+                    <%= button_to 'Удалить из друзей', friendship_path(friendship || inverse_friendship), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите удалить друга?" }, class: 'btn btn-danger' %>
                   <% end %>
-                <% when "rejected" %>
-                  <%= button_to 'Добавить в друзья', friendships_path(friend_id: user.id), method: :post %>
-                <% when "accepted" %>
-                  <p>Вы друзья</p>
-                  <%= button_to 'Удалить из друзей', friendship_path(friendship || inverse_friendship), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите удалить друга?" } %>
                 <% end %>
-              <% end %>
+              </div>
             <% end %>
           </li>
         <% end %>
       </ul>
 
-      <%= paginate @users %>
+      <div class="pagination mt-4">
+        <%= paginate @users, class: 'pagination justify-content-center' %>
+      </div>
     <% elsif params[:query].present? %>
-      <p>Пользователи не найдены.</p>
+      <p class="text-muted">Пользователи не найдены.</p>
     <% end %>
   <% end %>
 
   <% if params[:friends] == "true" %>
-    <h1>Ваши друзья</h1>
-    <%= form_with url: users_path, method: :get, local: true do |form| %>
+    <h1 class="mb-4">Ваши друзья</h1>
+    <%= form_with url: users_path, method: :get, local: true, html: { class: 'search-form' } do |form| %>
       <%= hidden_field_tag :friends, "true" %>
-      <%= form.label :query, "Поиск друзей:" %>
-      <%= form.text_field :query %>
-      <%= form.submit "Найти" %>
+      <div class="mb-3">
+        <%= form.label :query, "Поиск друзей:", class: 'form-label' %>
+        <%= form.text_field :query, class: 'form-control' %>
+      </div>
+      <div>
+        <%= form.submit "Найти", class: 'btn btn-primary' %>
+      </div>
     <% end %>
 
     <% friends = current_user.friendships.includes(:friend).where(status: 'accepted').map(&:friend) + 
@@ -72,24 +83,25 @@
     <% end %>
 
     <% if friends.any? %>
-      <ul>
+      <ul class="list-group">
         <% friends.each do |friend| %>
-          <li>
-            <% if friend.avatar.attached? %>
-              <%= image_tag(friend.avatar, size: '100x100') %>
-            <% end %>
-            <%= friend.first_name %> <%= friend.last_name %> (<%= friend.email %>)
-
-            <% if friendship = current_user.friendships.find_by(friend: friend) || friend.friendships.find_by(friend: current_user) %>
-              <%= button_to 'Удалить из друзей', friendship_path(friendship), 
+          <li class="list-group-item d-flex align-items-center mb-3">
+            <%= image_tag((friend.avatar.attached? ? friend.avatar.variant(resize_to_limit: [100, 100]) : 'default_avatar.webp'), class: 'avatar me-3 rounded-circle') %>
+            <div>
+              <strong><%= friend.first_name %> <%= friend.last_name %></strong><br>
+              <small><%= friend.email %></small>
+            </div>
+            <div class="ms-auto">
+              <%= button_to 'Удалить из друзей', friendship_path(friendship = current_user.friendships.find_by(friend: friend) || friend.friendships.find_by(friend: current_user)), 
                             method: :delete, 
-                            data: { turbo_confirm: "Вы уверены, что хотите удалить друга?" } %>
-            <% end %>
+                            data: { turbo_confirm: "Вы уверены, что хотите удалить друга?" }, 
+                            class: 'btn btn-danger' %>
+            </div>
           </li>
         <% end %>
       </ul>
     <% else %>
-      <p>У вас пока нет друзей.</p>
+      <p class="text-muted">У вас пока нет друзей.</p>
     <% end %>
   <% end %>
 <% end %>
