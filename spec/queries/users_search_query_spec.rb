@@ -1,4 +1,6 @@
 RSpec.describe UsersSearchQuery do
+  include_context "with stubbed active record order", model: User, order: { id: :asc }
+
   let(:relation) { User.all }
   let(:query) { described_class.new(search_query, page, per_page, relation) }
   let(:result) { query.call }
