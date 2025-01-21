@@ -6,7 +6,6 @@ module Friendships
              Friendships::Create::Save
 
     after do
-      Rails.logger.info("AFTER HOOK TRIGGERED")
       UserMailer.friend_request_email(context.friendship).deliver_later
     end
   end
