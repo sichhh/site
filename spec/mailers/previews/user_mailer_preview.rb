@@ -2,6 +2,7 @@
 class UserMailerPreview < ActionMailer::Preview
   def friend_request_email
     friendship = FactoryBot.build(:friendship)
+    
     UserMailer.friend_request_email(friendship)
   end
 end
