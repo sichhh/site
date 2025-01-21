@@ -13,5 +13,11 @@ RSpec.describe Friendships::Create, type: :interactor do
     it "successfully creates a friendship" do
       expect { call }.to change { Friendship.count }.by(1)
     end
+
+    it "sends a friend request email" do
+      expect {
+        call
+      }.to have_enqueued_mail(UserMailer, :friend_request_email).with(an_instance_of(Friendship))
+    end
   end
 end
