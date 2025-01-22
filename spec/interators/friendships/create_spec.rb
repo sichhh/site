@@ -19,5 +19,15 @@ RSpec.describe Friendships::Create, type: :interactor do
         call
       }.to have_enqueued_mail(UserMailer, :friend_request_email).with(an_instance_of(Friendship))
     end
+
+    context "when the friendship is not created" do
+      let(:context) { { current_user: current_user, friend_id: nil } }
+
+      it "does not send a friend request email" do
+        expect {
+          call
+        }.not_to have_enqueued_mail(UserMailer, :friend_request_email)
+      end
+    end
   end
 end
