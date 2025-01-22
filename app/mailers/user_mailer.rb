@@ -2,6 +2,8 @@ class UserMailer < ApplicationMailer
   default from: "sich_site@mail.ru"
 
   def friend_request_email(friendship)
+    return unless friendship.persisted?
+
     @user = friendship.user
     @friend = friendship.friend
 
