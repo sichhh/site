@@ -29,7 +29,11 @@ module Friendships
 
       def create_new_friendship
         friendship = current_user.friendships.build(friend: friend, status: "pending")
-        context.fail!(errors: friendship.errors) unless friendship.save
+        if friendship.save
+          context.friendship = friendship
+        else
+          context.fail!(errors: friendship.errors)
+        end
       end
     end
   end
