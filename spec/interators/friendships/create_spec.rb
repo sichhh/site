@@ -20,6 +20,12 @@ RSpec.describe Friendships::Create, type: :interactor do
       }.to have_enqueued_mail(UserMailer, :friend_request_email).with(an_instance_of(Friendship))
     end
 
+    it "enqueues the FriendshipArticleJob" do
+      expect {
+        call
+      }.to have_enqueued_job(FriendshipArticleJob)
+    end
+
     context "when the friendship is not created" do
       let(:context) { { current_user: current_user, friend_id: nil } }
 
@@ -27,6 +33,12 @@ RSpec.describe Friendships::Create, type: :interactor do
         expect {
           call
         }.not_to have_enqueued_mail(UserMailer, :friend_request_email)
+      end
+
+      it "does not enqueue the FriendshipArticleJob" do
+        expect {
+          call
+        }.not_to have_enqueued_job(FriendshipArticleJob)
       end
     end
   end

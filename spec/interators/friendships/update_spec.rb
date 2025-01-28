@@ -19,5 +19,21 @@ RSpec.describe Friendships::Update, type: :interactor do
       call
       expect(call).to be_success
     end
+
+    it "enqueues the FriendshipArticleJob" do
+      expect {
+        call
+      }.to have_enqueued_job(FriendshipArticleJob)
+    end
+
+    context "when the friendship is not found" do
+      let(:context) { { current_user: current_user, id: -1, status: "accepted" } }
+
+      it "does not enqueue the FriendshipArticleJob" do
+        expect {
+          call
+        }.not_to have_enqueued_job(FriendshipArticleJob)
+      end
+    end
   end
 end
