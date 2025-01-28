@@ -279,6 +279,8 @@ GEM
     rake (13.2.1)
     rdoc (6.8.1)
       psych (>= 4.0.0)
+    redis-client (0.23.2)
+      connection_pool
     regexp_parser (2.9.3)
     reline (0.5.12)
       io-console (~> 0.5)
@@ -343,6 +345,12 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (6.4.0)
       activesupport (>= 5.2.0)
+    sidekiq (7.3.8)
+      base64
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -415,6 +423,7 @@ DEPENDENCIES
   sassc-rails
   selenium-webdriver
   shoulda-matchers
+  sidekiq
   sprockets-rails
   stimulus-rails
   turbo-rails
