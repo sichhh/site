@@ -1,55 +1,76 @@
-<h1 class="mb-4">Articles</h1>
-
-<% if current_user %>
-  <%= link_to 'New Article', new_article_path, class: 'btn btn-primary btn-lg' %>
-<% end %>
-
-<div class="d-flex justify-content-between align-items-center mt-4">
-  <div>
-    <%= link_to "Sort by Date (Ascending)", articles_path(field: 'created_at', sort_type: 'asc'), class: 'btn btn-outline-secondary btn-sm' %>
-    <%= link_to "Sort by Date (Descending)", articles_path(field: 'created_at', sort_type: 'desc'), class: 'btn btn-outline-secondary btn-sm' %>
-    <%= link_to "Sort by Title (Ascending)", articles_path(field: 'title', sort_type: 'asc'), class: 'btn btn-outline-secondary btn-sm' %>
-    <%= link_to "Sort by Title (Descending)", articles_path(field: 'title', sort_type: 'desc'), class: 'btn btn-outline-secondary btn-sm' %>
-  </div>
-</div>
-
-<div id="articles" class="mt-4">
-  <% @articles.each do |article| %>
-    <% unless article.archived? %>
-      <article class="card mt-3">
+<div class="d-flex">
+  <aside class="me-2">
+    <% if current_user %>
+      <div class="card">
         <div class="card-body">
-          <h4><%= link_to article.title, article_path(article), class: "card-title" %></h4>
-
-          <section class="card-text">
-            <time datetime="<%= article.created_at.iso8601 %>">
-              <small><%= article.created_at.strftime('%B %d, %Y') %></small>
-            </time>
-            <p>Автор: <%= article.user.first_name %></p>
-            <p>Количество комментариев: <%= article.comments.count %></p>
-          </section>
-
-          <% if user_signed_in? && current_user == article.user %>
-            <div class="mt-3">
-              <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-secondary btn-sm' %>
-              <%= link_to 'Destroy', article_path(article), class: 'btn btn-danger btn-sm', 
-                            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-            </div>
-          <% end %>
+          <h5 class="card-title">Navigation</h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <%= link_to 'Edit Profile', edit_user_path(current_user), class: 'text-decoration-none' %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to 'Search User', users_path, class: 'text-decoration-none' %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to 'My friends', users_path(friends: true), class: 'text-decoration-none' %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to 'Incoming and<br>sent request'.html_safe, friendships_path, class: 'text-decoration-none' %>
+            </li>     
+          </ul>
         </div>
-      </article>
+      </div>
     <% end %>
-  <% end %>
-</div>
+  </aside>
 
-<% if current_user %>
-  <div class="mt-4">
-    <%= link_to 'Edit Profile', edit_user_path(current_user), class: 'btn btn-outline-primary btn-sm' %>
-    <%= link_to 'Search User', users_path, class: 'btn btn-outline-primary btn-sm' %>
-    <%= link_to 'Мои Друзья', users_path(friends: true), class: 'btn btn-outline-primary btn-sm' %>
-    <%= link_to 'Входящие и отправленные запросы', friendships_path,class: 'btn btn-outline-primary btn-sm' %>
-  </div>
-<% end %>
+  <main class="flex-grow-1">
+    <h1 class="mb-4">Articles</h1>
 
-<div class="mt-4">
-  <%= paginate @articles %>
+    <% if current_user %>
+      <%= link_to 'New Article', new_article_path, class: 'btn btn-primary btn-lg' %>
+    <% end %>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <div>
+        <%= link_to "Sort by Date (Ascending)", articles_path(field: 'created_at', sort_type: 'asc'), class: 'btn btn-outline-secondary btn-sm' %>
+        <%= link_to "Sort by Date (Descending)", articles_path(field: 'created_at', sort_type: 'desc'), class: 'btn btn-outline-secondary btn-sm' %>
+        <%= link_to "Sort by Title (Ascending)", articles_path(field: 'title', sort_type: 'asc'), class: 'btn btn-outline-secondary btn-sm' %>
+        <%= link_to "Sort by Title (Descending)", articles_path(field: 'title', sort_type: 'desc'), class: 'btn btn-outline-secondary btn-sm' %>
+      </div>
+    </div>
+
+    <div id="articles" class="mt-4">
+      <% @articles.each do |article| %>
+        <% unless article.archived? %>
+          <article 
+            class="card mt-3 <%= 'card-special' if article.body&.start_with?('Я отправил заявку') || article.body&.start_with?('У меня новый друг') %>" 
+            data-article-id="<%= article.id %>">
+            <div class="card-body">
+              <h4><%= link_to article.title, article_path(article), class: "card-title" %></h4>
+
+              <section class="card-text">
+                <time datetime="<%= article.created_at.iso8601 %>">
+                  <small><%= article.created_at.strftime('%B %d, %Y') %></small>
+                </time>
+                <p>Автор: <%= article.user.first_name %></p>
+                <p>Количество комментариев: <%= article.comments.count %></p>
+              </section>
+
+              <% if user_signed_in? && current_user == article.user %>
+                <div class="mt-3">
+                  <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-secondary btn-sm' %>
+                  <%= link_to 'Destroy', article_path(article), class: 'btn btn-danger btn-sm', 
+                                data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+                </div>
+              <% end %>
+            </div>
+          </article>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="mt-4">
+      <%= paginate @articles %>
+    </div>
+  </main>
 </div>
