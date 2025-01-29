@@ -1,40 +1,44 @@
-<h1><%= @article.title %></h1>
+<article class="card mt-4">
+  <div class="card-body">
+    <h1 class="card-title"><%= @article.title %></h1>
 
-<div class="article-info">
- 
-  <div class="author-details">
-    <p>Автор: <%= @article.user.first_name %></p> 
+    <section class="card-text">
+      <p><%= @article.body %></p>
+    </section>
+
+    <div class="article-info d-flex align-items-center mt-4">
+      <div class="author-details me-3">
+        <p>Автор: <%= @article.user.first_name %></p>
+      </div>
+      <div class="author-avatar">
+        <% if @article.user.avatar.attached? %>
+          <%= image_tag @article.user.avatar_thumbnail, class: 'avatar', size: '100x100' %>
+        <% else %>
+          <%= image_tag 'default_avatar.webp', class: 'avatar', size: '100x100' %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <% if allowed_to?(:edit?, @article) %>
+        <%= link_to "Edit", edit_article_path(@article), class: "btn btn-secondary me-2" %>
+      <% end %>
+      <% if allowed_to?(:destroy?, @article) %>
+        <%= link_to "Destroy", article_path(@article), class: "btn btn-danger",
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+      <% end %>
+    </div>
   </div>
-  <div class="author-avatar">
-  <% if @article.user.avatar.attached? %>
-    <%= image_tag @article.user.avatar_thumbnail, class: 'avatar' %> 
+</article>
+
+<section class="mt-5">
+  <h2>Comments</h2>
+  <%= render @article.comments %>
+
+  <% if user_signed_in? %>
+    <div class="mt-4">
+      <h3>Add a comment:</h3>
+      <%= render 'comments/form' %>
+    </div>
   <% end %>
-</div> 
-</div>
-
-<div class="body">
-    <h2>Body</h2> 
-</div>
-<p><%= @article.body %></p>
-
-<ul>
-    <% if allowed_to?(:edit?, @article) %>
-      <li><%= link_to "Edit", edit_article_path(@article) %></li>
-    <% end %>
-    <% if allowed_to?(:destroy?, @article) %>
-      <li><%= link_to "Destroy", article_path(@article), data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Are you sure?"
-                      } %></li>
-    <% end %>
-</ul>
-
-<h3>Comments</h3>
-<%= render partial: 'comments/comment', collection: @comments, as: :comment %>
 <%= paginate @comments %>
-
-<% if user_signed_in? %>
-<h3>Add a comment:</h3>
-<%= render 'comments/form' %>
-<% end %> 
-

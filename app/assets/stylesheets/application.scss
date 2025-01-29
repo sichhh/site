@@ -1,0 +1,23 @@
+@import 'bootstrap';
+
+.field_with_errors {
+  .form-control {
+    border-color: $red;
+  }
+  label {
+    color: $red;
+  }
+} 
+
+.card-special {
+  border: 2px solid #007bff;
+  background-color: #f0f8ff;
+}
+
+aside {
+  min-width: 150px;
+}
+.card-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
